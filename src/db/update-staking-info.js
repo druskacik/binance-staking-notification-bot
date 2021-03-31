@@ -17,7 +17,7 @@ const updateStakingInfo = async (data) => {
                 .where({ asset_name: assetName })
                 .select()
 
-            if (assetRow.length == 0) {
+            if (assetRow.length === 0) {
                 console.log('Asset not in DB', assetName);
                 let newAssetRow = await new Asset({
                     asset_name: assetName

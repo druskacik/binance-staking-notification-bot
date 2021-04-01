@@ -3,7 +3,7 @@ const knex = require('../../connection');
 const Asset = require('../models/Asset');
 const Project = require('../models/Project');
 
-const sendStakingProjectAvailableEmail = require('../mailer/emails/staking-project-available');
+const sendStakingProjectAvailableNotification = require('../notifications/project-available');
 
 const updateStakingInfo = async (data) => {
 
@@ -72,14 +72,9 @@ const updateProjects = async (projects, assetID) => {
                 projectDB = projectDB[0];
 
                 if (projectDB.sold_out && !project.sellOut) {
-                    console.log('Project became available !');
-                    console.log(project);
-                    // TODO: notify about it
+                    console.log(`Project became available ! Asset: ${project.asset} Duration: ${project.duration}`);
 
-
-                    await sendStakingProjectAvailableEmail('robert.druska@gmail.com', project);
-
-
+                    await sendStakingProjectAvailableNotification(project, assetID);
                 }
 
                 await knex('project')

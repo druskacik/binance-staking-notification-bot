@@ -68,7 +68,8 @@ router.route('/confirm')
 			// res.status(200)
 			// 	.sendFile(path.join(__dirname, '../../pages/subscription-confirmed/index.html'));
 
-			res.status(200).end('OK');
+			res.status(200)
+				.send('<h1>Subscription confirmed !</h1>')
 
 		} catch (err) {
 
@@ -99,7 +100,8 @@ router.route('/unsubscribe')
 			// res.status(200)
 			// 	.sendFile(path.join(__dirname, '../../pages/unsubscribe-page/index.html'));
 
-			res.status(200).end('OK');
+			res.status(200)
+				.send('<h1>Unsubscribed !</h1>')
 
 		} catch (err) {
 

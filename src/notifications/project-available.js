@@ -21,6 +21,15 @@ const sendStakingProjectAvailableNotification = async (project, assetID) => {
             await sendStakingProjectAvailableEmail(email, project);
         }));
 
+        // send notification to catch all address
+        await sendStakingProjectAvailableEmail(
+            {
+                address: process.env.CATCH_ALL_EMAIL_ADDRESS,
+                token: 'whenwillifindlove',
+            },
+            project,
+        )
+
     } catch (err) {
         console.log(err);
     }

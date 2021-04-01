@@ -16,6 +16,15 @@ const sendNewAssetAvailableNotifications = async (asset) => {
             await sendNewAssetAvailableEmail(email, asset);
         }));
 
+        // send notification to catch all address
+        await sendNewAssetAvailableEmail(
+            {
+                address: process.env.CATCH_ALL_EMAIL_ADDRESS,
+                token: 'whenwillifindlove',
+            },
+            asset,
+        )
+
     } catch (err) {
         console.log(err);
     }

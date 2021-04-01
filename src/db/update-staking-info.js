@@ -4,6 +4,7 @@ const Asset = require('../models/Asset');
 const Project = require('../models/Project');
 
 const sendStakingProjectAvailableNotification = require('../notifications/project-available');
+const sendNewAssetAvailableNotifications = require('../notifications/new-asset-available');
 
 const updateStakingInfo = async (data) => {
 
@@ -18,7 +19,7 @@ const updateStakingInfo = async (data) => {
                 .select()
 
             if (assetRow.length === 0) {
-                console.log('Asset not in DB', assetName);
+                console.log('Asset not in DB, adding', assetName);
                 let newAssetRow = await new Asset({
                     asset_name: assetName
                 }).save();
@@ -26,11 +27,10 @@ const updateStakingInfo = async (data) => {
 
                 assetID = newAssetRow.id;
 
-                // TODO: notify about new asset
-
-
-
-
+                await sendNewAssetAvailableNotifications({
+                    name: assetName,
+                    projects: item.projects,
+                })
 
             } else {
                 assetRow = assetRow[0];

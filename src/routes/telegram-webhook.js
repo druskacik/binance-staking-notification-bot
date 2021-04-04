@@ -15,7 +15,7 @@ router.route('/')
     .post(async (req, res) => {
         try {
 
-            const message = req.body.message;
+            const message = req.body.message || req.body.edited_message;
             const chatID = message.chat.id;
 
             const messageText = message.text;
@@ -85,7 +85,8 @@ router.route('/')
                         const newSubscribedAssets = await subscribeNewAssets(chatID, assets);
                         await sendTelegramMessage('subscribe', chatID, {
                             assets: newSubscribedAssets,
-                            notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset)),
+                            subscribeNew: assets.includes('NEW'),
+                            notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                         });
                     } else {
                         await sendTelegramMessage('unknown command', chatID, {

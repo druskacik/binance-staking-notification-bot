@@ -40,6 +40,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 templateText = await readFileAsync(__dirname + '/messages/subscribe.mustache');
                 text = Mustache.render(templateText, {
                     ...data,
+                    found: data.assets.length > 0,
                     notFound: data.notFoundAssets.length > 0,
                 });
                 break;

@@ -1,16 +1,20 @@
+{{ #subscribeNew }}You will get notified whenever staking of a new currency appears on Binance.{{ /subscribeNew }}
+
+{{ #found }}
 You now follow these currencies:
 
 {{ #assets }}
 {{.}}
 {{ /assets }}
+{{ /found }}
 
 {{ #notFound }}
-These assets were not found on the list:
-{{ /notFound }}
+These currencies were not found on the list:
 
 {{ #notFoundAssets }}
 {{.}}
 {{ /notFoundAssets }}
+{{ /notFound }}
 
 See your current notification settings:
 /settings

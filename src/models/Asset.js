@@ -1,15 +1,15 @@
 const connection = require('../../connection');
 const bookshelf = require('bookshelf')(connection);
 
-const Email = require('./Email');
-const EmailAssetNotification = require('./EmailAssetNotification');
+const User = require('./User');
+const UserAssetNotification = require('./UserAssetNotification');
 const Project = require('./Project');
 
 const Asset = bookshelf.Model.extend({
   tableName: 'asset',
   idAttribute: 'id',
   projects: function () { return this.hasMany(Project); },
-  emails: function () { return this.belongsToMany(Email).through(EmailAssetNotification) }
+  users: function () { return this.belongsToMany(User).through(UserAssetNotification) }
 });
 
 module.exports = bookshelf.model('Asset', Asset);

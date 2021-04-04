@@ -1,5 +1,6 @@
 const sendStakingProjectAvailableEmail = require('../mailer/emails/staking-project-available');
 const Asset = require('../models/Asset');
+const sendTelegramMessage = require('../services/telegram-bot');
 
 const sendStakingProjectAvailableNotification = async (project, assetID) => {
     try {
@@ -10,15 +11,21 @@ const sendStakingProjectAvailableNotification = async (project, assetID) => {
             })
             .fetch({
                 withRelated: [{
-                    emails: function (query) {
+                    users: function (query) {
                         query.where({ active: 1 }).select();
                     },
                 }],
             })
         asset = asset.toJSON();
 
-        await Promise.all(asset.emails.map(async (email) => {
-            await sendStakingProjectAvailableEmail(email, project);
+        await Promise.all(asset.users.map(async (user) => {
+            if (user.address) {
+                await sendStakingProjectAvailableEmail(user, project);
+            } else {
+                await sendTelegramMessage('staking-project-available', user.telegram_chat_id, {
+                    project,
+                })
+            }
         }));
 
         // send notification to catch all address

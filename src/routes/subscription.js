@@ -2,7 +2,7 @@ const express = require('express');
 const randomstring = require('randomstring');
 
 const knex = require('../../connection');
-const Email = require('../models/Email');
+const User = require('../models/User');
 const sendConfirmationEmail = require('../mailer/emails/confirm-subscription');
 
 const router = express.Router();
@@ -88,7 +88,8 @@ router.route('/unsubscribe')
 		try {
 			const token = req.query.token;
 
-			await knex('email')
+			await knex('user')
+				.whereNotNull('address')
 				.where({
 					token,
 				})
@@ -117,35 +118,35 @@ router.route('/unsubscribe')
 const confirmSubscription = async (request, token) => {
 
 	try {
-		let email = await Email.forge().where({
+		let user = await User.forge().where({
 			address: request.email,
 		}).fetchAll();
-		email = email.toJSON();
+		user = user.toJSON();
 	
-		let emailID = null;
+		let userID = null;
 	
-		if (email.length === 0) {
+		if (user.length === 0) {
 	
 			// email not in DB, create
-			let newEmailRow = await new Email({
+			let newUserRow = await new User({
 				address: request.email,
 				active: 1,
 				subscribe_new_assets: request.subscribeNewAssets,
 				token: token,
 			}).save();
-			newEmailRow = newEmailRow.toJSON();
+			newUserRow = newUserRow.toJSON();
 	
-			emailID = newEmailRow.id;
+			userID = newUserRow.id;
 	
 		} else {
 	
 			// update existing email row
 	
-			emailID = email[0].id;
+			userID = user[0].id;
 	
-			await knex('email')
+			await knex('user')
 				.where({
-					id: emailID,
+					id: userID,
 				})
 				.update({
 					active: 1,
@@ -154,19 +155,19 @@ const confirmSubscription = async (request, token) => {
 				})
 	
 			// delete existing settings
-			await knex('email_asset_notification')
+			await knex('user_asset_notification')
 				.where({
-					email_id: emailID
+					user_id: userID
 				})
 				.del()
 		}
 	
 		const subscribedAssets = request.subscribedAssetsIDs.map((assetID) => ({
-			email_id: emailID,
+			user_id: userID,
 			asset_id: assetID,
 		}))
 	
-		await knex('email_asset_notification').insert(subscribedAssets);
+		await knex('user_asset_notification').insert(subscribedAssets);
 
 	} catch (err) {
 

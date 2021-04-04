@@ -6,6 +6,7 @@ const app = express();
 
 const subscription = require('./routes/subscription');
 const stakingInfo = require('./routes/staking-info');
+const telegramBot = require('./routes/telegram-webhook');
 
 app.use(cors());
 
@@ -29,6 +30,7 @@ app.use(express.static('./dist'));
 
 app.use('/api/subscription', subscription);
 app.use('/api/get-staking-info', stakingInfo);
+app.use(`/api/telegram${process.env.TELEGRAM_BOT_TOKEN}`, telegramBot);
 
 const listen = (port) => {
   app.listen(port, () => {

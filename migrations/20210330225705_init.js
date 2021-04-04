@@ -39,32 +39,33 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-        knex.schema.createTable('email', (table) => {
+        knex.schema.createTable('user', (table) => {
             table.increments('id').primary();
-            table.string('address').notNullable();
+            table.string('address');
+            table.string('telegram_chat_id');
             table.boolean('subscribe_new_assets').defaultTo(0);
             table.boolean('active').defaultTo(0);
             table.string('token').notNullable();
             table.timestamp('created_at').defaultTo(knex.fn.now());
         })
             .then(() => {
-                console.log('Table email was created.');
+                console.log('Table user was created.');
             })
             .catch((err) => {
                 console.log(err);
             }),
-        knex.schema.createTable('email_asset_notification', (table) => {
+        knex.schema.createTable('user_asset_notification', (table) => {
             table.increments('id').primary();
 
-            table.integer('email_id').unsigned();
-            table.foreign('email_id').references('email.id');
+            table.integer('user_id').unsigned();
+            table.foreign('user_id').references('user.id');
             table.integer('asset_id').unsigned();
             table.foreign('asset_id').references('asset.id');
 
             table.timestamp('created_at').defaultTo(knex.fn.now());
         })
             .then(() => {
-                console.log('Table email_asset_notification was created.');
+                console.log('Table user_asset_notification was created.');
             })
             .catch((err) => {
                 console.log(err);
@@ -95,16 +96,16 @@ exports.down = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-        knex.schema.dropTable('email_asset_notification')
+        knex.schema.dropTable('user_asset_notification')
             .then(() => {
-                console.log('Table email_asset_notification was deleted.');
+                console.log('Table user_asset_notification was deleted.');
             })
             .catch((err) => {
                 console.log(err);
             }),
-        knex.schema.dropTable('email')
+        knex.schema.dropTable('user')
             .then(() => {
-                console.log('Table email was deleted.');
+                console.log('Table user was deleted.');
             })
             .catch((err) => {
                 console.log(err);

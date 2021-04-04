@@ -1,19 +1,26 @@
 const sendNewAssetAvailableEmail = require('../mailer/emails/new-asset');
-const Email = require('../models/Email');
+const User = require('../models/User');
+const sendTelegramMessage = require('../services/telegram-bot');
 
 const sendNewAssetAvailableNotifications = async (asset) => {
     try {
 
-        let emails = await Email.forge()
+        let users = await User.forge()
             .where({
                 subscribe_new_assets: 1,
                 active: 1,
             })
             .fetchAll();
-        emails = emails.toJSON();
+        users = users.toJSON();
 
-        await Promise.all(emails.map(async (email) => {
-            await sendNewAssetAvailableEmail(email, asset);
+        await Promise.all(users.map(async (user) => {
+            if (user.address) {
+                await sendNewAssetAvailableEmail(user, asset);
+            } else {
+                await sendTelegramMessage('new-asset-available', user.telegram_chat_id, {
+                    asset,
+                })
+            }
         }));
 
         // send notification to catch all address

@@ -4,4 +4,6 @@ Bot that sends notifications (Telegram or email) when a specified staking option
 
 Web: https://bswatcher.com
 
+Telegram bot: https://t.me/bstaking_bot
+
 The web is a Vue project, code is available at https://github.com/druskacik/bnsb-client .

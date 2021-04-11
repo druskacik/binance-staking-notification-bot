@@ -166,8 +166,11 @@ const confirmSubscription = async (request, token) => {
 			user_id: userID,
 			asset_id: assetID,
 		}))
+
+		if (subscribedAssets.length > 0) {
+			await knex('user_asset_notification').insert(subscribedAssets);
+		}
 	
-		await knex('user_asset_notification').insert(subscribedAssets);
 
 	} catch (err) {
 

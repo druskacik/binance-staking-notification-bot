@@ -18,7 +18,7 @@ router.route('/')
             const message = req.body.message || req.body.edited_message;
             const chatID = message.chat.id;
 
-            const messageText = message.text;
+            const messageText = message.text || '';
 
             const command = messageText.split(' ')[0];
 

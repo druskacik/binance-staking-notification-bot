@@ -16,6 +16,12 @@ router.route('/')
         try {
 
             const message = req.body.message || req.body.edited_message;
+            if (!message) {
+                res.status(200)
+                    .end('ok');
+                return;
+            }
+
             const chatID = message.chat.id;
 
             const messageText = message.text || '';

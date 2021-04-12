@@ -120,6 +120,7 @@ router.route('/')
                 .end('ok');
 
         } catch (err) {
+            console.log(req.body);
             console.log(err);
             res.status(err.status || 500)
                 .json({

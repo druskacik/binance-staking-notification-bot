@@ -16,35 +16,40 @@ router.route('/')
         try {
 
             const message = req.body.message || req.body.edited_message;
+
+            // if message is undefined, probably the bot was added to a group
             if (!message) {
+                const myChatMember = req.body.my_chat_member;
+                if (myChatMember) {
+                    const chatID = myChatMember.chat.id;
+                    await addUserIfNotExists(chatID);
+                    await sendTelegramMessage('start', chatID, {});
+                }
                 res.status(200)
                     .end('ok');
                 return;
             }
 
             const chatID = message.chat.id;
+            await addUserIfNotExists(chatID); // TODO: this is unnecessarily time consuming, refactor
 
-            const messageText = message.text || '';
+            const messageText = message.text;
+            if (!messageText) {
+                res.status(200)
+                    .end('ok');
+                return;
+            }
 
-            const command = messageText.split(' ')[0];
+            let command = messageText.split(' ')[0];
+            if (command.includes('@')) {
+                command = command.split('@')[0];
+            }
 
             let assets;
 
             switch (command) {
 
                 case '/start':
-                    let user = await User.forge().where({
-                        telegram_chat_id: chatID,
-                    }).fetchAll();
-                    user = user.toJSON();
-                    if (user.length === 0) {
-                        await new User({
-                            telegram_chat_id: chatID,
-                            active: 1,
-                            token: chatID,
-                        }).save();
-                        console.log('New Telegram user created !');
-                    }
                     await sendTelegramMessage('start', chatID, {});
                     break;
 
@@ -135,5 +140,24 @@ router.route('/')
                 })
             }
     })
+
+const addUserIfNotExists = async (chatID) => {
+    try {
+        let user = await User.forge().where({
+            telegram_chat_id: chatID,
+        }).fetchAll();
+        user = user.toJSON();
+        if (user.length === 0) {
+            await new User({
+                telegram_chat_id: chatID,
+                active: 1,
+                token: chatID,
+            }).save();
+            console.log('New Telegram user created !');
+        }
+    } catch(err) {
+        throw err;
+    }
+}
 
 module.exports = router;

@@ -1,9 +1,11 @@
-Staking option on {{ asset }}, which was previously sold out, is now available.
+Following staking options on {{ asset }}, which were previously sold out, are now available:
 
-Asset: {{ asset }}
+{{ #projects }}
 Duration: {{ duration }}
 Est. APY: {{ config.annualInterestRate }}
 Daily interest rate: {{ config.dailyInterestRate }}
+
+{{ /projects}}
 
 To change notifications settings, fill in the form on https://bswatcher.com and your current settings will be overwritten.
 

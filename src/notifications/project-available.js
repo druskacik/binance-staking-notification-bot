@@ -2,7 +2,7 @@ const sendStakingProjectAvailableEmail = require('../mailer/emails/staking-proje
 const Asset = require('../models/Asset');
 const sendTelegramMessage = require('../services/telegram-bot');
 
-const sendStakingProjectAvailableNotification = async (project, assetID) => {
+const sendStakingProjectAvailableNotification = async (projects, assetID) => {
     try {
 
         let asset = await Asset.forge()
@@ -20,22 +20,13 @@ const sendStakingProjectAvailableNotification = async (project, assetID) => {
 
         await Promise.all(asset.users.map(async (user) => {
             if (user.address) {
-                await sendStakingProjectAvailableEmail(user, project);
+                await sendStakingProjectAvailableEmail(user, projects);
             } else {
                 await sendTelegramMessage('staking-project-available', user.telegram_chat_id, {
-                    project,
+                    projects,
                 })
             }
         }));
-
-        // send notification to catch all address
-        await sendStakingProjectAvailableEmail(
-            {
-                address: process.env.CATCH_ALL_EMAIL_ADDRESS,
-                token: 'whenwillifindlove',
-            },
-            project,
-        )
 
     } catch (err) {
         console.log(err);

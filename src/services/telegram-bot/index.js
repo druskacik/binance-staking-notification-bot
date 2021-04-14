@@ -55,7 +55,8 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             case 'staking-project-available':
                 templateText = await readFileAsync(__dirname + '/messages/project-available.mustache');
                 text = Mustache.render(templateText, {
-                    ...data.project,
+                    asset: data.projects[0].asset,
+                    projects: data.projects,
                 });
                 break;
 

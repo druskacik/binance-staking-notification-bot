@@ -4,21 +4,23 @@ const sendMail = require('../../index');
 
 const readFileAsync = require('../../../utils/read-file-async');
 
-const sendStakingProjectAvailableEmail = async (email, project) => {
+const sendStakingProjectAvailableEmail = async (email, projects) => {
   try {
     console.log(`Sending staking-project-available email to ${email.address}`);
 
     const unsubscribeUrl = `${process.env.BASE_URL}/api/subscription/unsubscribe?token=${email.token}`;
+    const asset = projects[0].asset;
 
     const templateText = await readFileAsync(__dirname + '/template-text.mustache');
     const text = Mustache.render(templateText, {
-        ...project,
+        asset,
+        projects,
         unsubscribeUrl,
     });
 
     const options = {
       to: email.address,
-      subject: `${project.asset} staking option previously sold out is now available`,
+      subject: `${asset} staking option previously sold out is now available`,
       text,
     }
 

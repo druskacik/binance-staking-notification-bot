@@ -48,7 +48,8 @@ const updateStakingInfo = async (data) => {
 
 const updateProjects = async (projects, assetID) => {
     try {
-        const newProjectsResponse = await Promise.all(projects.map(async (project) => {
+
+        let newProjectsResponse = await Promise.all(projects.map(async (project) => {
             let projectDB = await Project.forge().where({
                 binance_id: project.id,
                 asset_id: assetID
@@ -68,14 +69,9 @@ const updateProjects = async (projects, assetID) => {
                     min_purchase_amount: project.config.minPurchaseAmount,
                     max_purchase_amount: project.config.maxPurchaseAmountPerUser,
                 }).save()
+                return project;
             } else {
                 projectDB = projectDB[0];
-
-                if (projectDB.sold_out && !project.sellOut) {
-                    console.log(`Project became available ! Asset: ${project.asset} Duration: ${project.duration}`);
-
-                    await sendStakingProjectAvailableNotification(project, assetID);
-                }
 
                 await knex('project')
                     .where({
@@ -92,8 +88,18 @@ const updateProjects = async (projects, assetID) => {
                         max_purchase_amount: project.config.maxPurchaseAmountPerUser,
                     })
                     
+                
+                if (projectDB.sold_out && !project.sellOut) {
+                    console.log(`Project became available ! Asset: ${project.asset} Duration: ${project.duration}`);
+                    return project;
+                }
             }
         }))
+        newProjectsResponse = newProjectsResponse.filter(p => Boolean(p));
+
+        if (newProjectsResponse.length > 0) {
+            await sendStakingProjectAvailableNotification(newProjectsResponse, assetID);
+        }
     } catch (err) {
         console.log(err);
     }

@@ -4,11 +4,11 @@ const sendMail = require('../../index');
 
 const readFileAsync = require('../../../utils/read-file-async');
 
-const sendNewAssetAvailableEmail = async (email, asset) => {
+const sendNewAssetAvailableEmail = async (user, asset) => {
   try {
-    console.log(`Sending new-asset email to ${email.address}`);
+    console.log(`Sending new-asset email to ${user.address}`);
 
-    const unsubscribeUrl = `${process.env.BASE_URL}/api/subscription/unsubscribe?token=${email.token}`;
+    const unsubscribeUrl = `${process.env.BASE_URL}/api/subscription/unsubscribe?token=${user.token}`;
 
     const templateText = await readFileAsync(__dirname + '/template-text.mustache');
     const text = Mustache.render(templateText, {
@@ -17,12 +17,13 @@ const sendNewAssetAvailableEmail = async (email, asset) => {
     });
 
     const options = {
-      to: email.address,
+      to: user.address,
       subject: `New currency staking on Binance -  ${asset.name}`,
       text,
     }
 
-    await sendMail(options);
+    const transporterID = user.id % 7;
+    await sendMail(options, transporterID);
 
   } catch (err) {
     console.log(err);

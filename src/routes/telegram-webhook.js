@@ -5,6 +5,8 @@ const Asset = require('../models/Asset');
 
 const subscribeNewAssets = require('./telegram/subscribe');
 const unsubscribeAssets = require('./telegram/unsubscribe');
+const subscribeDefiAssets = require('./telegram/subscribe-defi');
+const unsubscribeDefiAssets = require('./telegram/unsubscribe-defi');
 
 const sendTelegramMessage = require('../services/telegram-bot');
 const getUserSettings = require('./telegram/get-user.settings');
@@ -101,7 +103,25 @@ router.route('/')
                         });
                     } else {
                         await sendTelegramMessage('unknown command', chatID, {
-                            message: 'Please enter at least one asset to subscribe !',
+                            message: 'Please enter at least one currency to subscribe !',
+                        });
+                    }
+                    break;
+
+
+                case '/subscribe_defi':
+                    assets = messageText.split(' ').slice(1);
+                    if (assets.length > 0) {
+                        assets = assets.map(a => a.toUpperCase());
+                        const newSubscribedAssets = await subscribeDefiAssets(chatID, assets);
+                        await sendTelegramMessage('subscribe', chatID, {
+                            assets: newSubscribedAssets,
+                            subscribeNew: assets.includes('NEW'),
+                            notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
+                        });
+                    } else {
+                        await sendTelegramMessage('unknown command', chatID, {
+                            message: 'Please enter at least one currency to subscribe !',
                         });
                     }
                     break;
@@ -117,7 +137,23 @@ router.route('/')
                         });
                     } else {
                         await sendTelegramMessage('unknown command', chatID, {
-                            message: 'Please enter at least one asset to unsubscribe !',
+                            message: 'Please enter at least one currency to unsubscribe !',
+                        });
+                    }
+                    break;
+
+                
+                case '/unsubscribe_defi':
+                    assets = messageText.split(' ').slice(1);
+                    if (assets.length > 0) {
+                        assets = assets.map(a => a.toUpperCase());
+                        const unsubscribedAssets = await unsubscribeDefiAssets(chatID, assets);
+                        await sendTelegramMessage('unsubscribe', chatID, {
+                            assets: unsubscribedAssets,
+                        });
+                    } else {
+                        await sendTelegramMessage('unknown command', chatID, {
+                            message: 'Please enter at least one currency to unsubscribe !',
                         });
                     }
                     break;

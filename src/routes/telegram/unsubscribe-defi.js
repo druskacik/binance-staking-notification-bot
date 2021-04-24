@@ -1,7 +1,7 @@
 const knex = require('../../../connection');
 const User = require('../../models/User');
 
-const unsubscribeAssets = async (chatID, assets) => {
+const unsubscribeDefiAssets = async (chatID, assets) => {
     try {
 
         let user = await User.forge().where({
@@ -15,23 +15,23 @@ const unsubscribeAssets = async (chatID, assets) => {
                     id: user.id,
                 })
                 .update({
-                    subscribe_new_assets: 0,
+                    subscribe_defi: 0,
                 })
         }
 
-        const dbAssets = await knex('asset')
-        .whereIn('asset_name', assets)
-        .select();
+        const dbAssets = await knex('asset_defi')
+            .whereIn('asset_name', assets)
+            .select();
 
         if (dbAssets.length > 0) {
 
             const dbAssetsIDs = dbAssets.map(asset => asset.id);
 
-            await knex('user_asset_notification')
+            await knex('user_defi_notification')
                 .where({
                     user_id: user.id,
                 })
-                .whereIn('asset_id', dbAssetsIDs)
+                .whereIn('asset_defi_id', dbAssetsIDs)
                 .del();
         }
 
@@ -42,4 +42,4 @@ const unsubscribeAssets = async (chatID, assets) => {
     }
 }
 
-module.exports = unsubscribeAssets;
+module.exports = unsubscribeDefiAssets;

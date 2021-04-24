@@ -60,8 +60,23 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
                 break;
 
+            case 'defi-project-available':
+                templateText = await readFileAsync(__dirname + '/messages/defi-project-available.mustache');
+                text = Mustache.render(templateText, {
+                    asset: data.projects[0].asset,
+                    projects: data.projects,
+                });
+                break;
+
             case 'new-asset-available':
                 templateText = await readFileAsync(__dirname + '/messages/new-asset.mustache');
+                text = Mustache.render(templateText, {
+                    ...data.asset,
+                });
+                break;
+
+            case 'new-defi-asset-available':
+                templateText = await readFileAsync(__dirname + '/messages/new-defi-asset.mustache');
                 text = Mustache.render(templateText, {
                     ...data.asset,
                 });

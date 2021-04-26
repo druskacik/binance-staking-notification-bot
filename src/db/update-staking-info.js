@@ -91,7 +91,25 @@ const updateProjects = async (projects, assetID) => {
                 
                 if (projectDB.sold_out && !project.sellOut) {
                     console.log(`Project became available ! Asset: ${project.asset} Duration: ${project.duration}`);
+
+                    await knex('availability_history_locked').insert({
+                        asset_name: project.asset,
+                        duration: project.duration,
+                        project_id: projectDB.id,
+                        became_sold_out: 0,
+                    });
+
                     return project;
+                }
+
+                if (!projectDB.sold_out && project.sellOut) {
+                    // project became sold out, log to database
+                    await knex('availability_history_locked').insert({
+                        asset_name: project.asset,
+                        duration: project.duration,
+                        project_id: projectDB.id,
+                        became_sold_out: 1,
+                    });
                 }
             }
         }))

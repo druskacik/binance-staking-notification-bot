@@ -131,7 +131,8 @@ const confirmSubscription = async (request, token) => {
 			let newUserRow = await new User({
 				address: request.email,
 				active: 1,
-				subscribe_new_assets: request.subscribeNewAssets,
+				subscribe_new_assets: request.subscribeNewAssetsLocked,
+				subscribe_defi: request.subscribeNewAssetsDefi,
 				token: token,
 			}).save();
 			newUserRow = newUserRow.toJSON();
@@ -150,7 +151,8 @@ const confirmSubscription = async (request, token) => {
 				})
 				.update({
 					active: 1,
-					subscribe_new_assets: request.subscribeNewAssets,
+					subscribe_new_assets: request.subscribeNewAssetsLocked,
+					subscribe_defi: request.subscribeNewAssetsDefi,
 					token: token,
 				})
 	
@@ -160,15 +162,27 @@ const confirmSubscription = async (request, token) => {
 					user_id: userID
 				})
 				.del()
+			await knex('user_defi_notification')
+				.where({
+					user_id: userID
+				})
+				.del()
 		}
 	
-		const subscribedAssets = request.subscribedAssetsIDs.map((assetID) => ({
+		const subscribedAssetsLocked = request.subscribedAssetsLocked.map((assetID) => ({
 			user_id: userID,
 			asset_id: assetID,
-		}))
+		}));
+		if (subscribedAssetsLocked.length > 0) {
+			await knex('user_asset_notification').insert(subscribedAssetsLocked);
+		}
 
-		if (subscribedAssets.length > 0) {
-			await knex('user_asset_notification').insert(subscribedAssets);
+		const subscribedAssetsDefi = request.subscribedAssetsDefi.map((assetID) => ({
+			user_id: userID,
+			asset_defi_id: assetID,
+		}));
+		if (subscribedAssetsDefi.length > 0) {
+			await knex('user_defi_notification').insert(subscribedAssetsDefi);
 		}
 	
 

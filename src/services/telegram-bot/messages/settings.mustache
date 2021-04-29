@@ -1,9 +1,17 @@
-I will notify you when a staking option for one of the following currencies becomes available:
+I will notify you when locked staking for one of the following currencies becomes available:
 
-{{ #assets }}
+{{ #assetsLocked }}
 {{.}}
-{{ /assets }}
+{{ /assetsLocked }}
+{{ #subcribeNewAssetsLocked }}
+new currency
+{{ /subcribeNewAssetsLocked }}
 
-{{ #subcribeNewAssets }}
-I will also notify you when a new currency staking option appears on Binance.
-{{ /subcribeNewAssets }}
+I will notify you when DeFi staking for one of the following currencies becomes available:
+
+{{ #assetsDefi }}
+{{.}}
+{{ /assetsDefi }}
+{{ #subcribeNewAssetsDefi }}
+new currency
+{{ /subcribeNewAssetsDefi }}

@@ -7,7 +7,7 @@ const getUserSettings = async (chatID) => {
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch({
-            withRelated: ['assets'],
+            withRelated: ['assetsLocked', 'assetsDefi'],
         });
         user = user.toJSON();
 

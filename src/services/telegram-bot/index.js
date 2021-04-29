@@ -9,6 +9,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
 
         let text;
         let templateText;
+        let parseMode = 'HTML';
 
         switch (messageType) {
             case 'start':
@@ -25,7 +26,8 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             case 'list':
                 templateText = await readFileAsync(__dirname + '/messages/list.mustache');
                 text = Mustache.render(templateText, {
-                    assets: data.assets,
+                    assetsLocked: data.assetsLocked,
+                    assetsDefi: data.assetsDefi,
                 });
                 break;
 
@@ -48,7 +50,8 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             case 'unsubscribe':
                 templateText = await readFileAsync(__dirname + '/messages/unsubscribe.mustache');
                 text = Mustache.render(templateText, {
-                    assets: data.assets,
+                    ...data,
+                    unsubscribedSomething: data.assets.length > 0,
                 });
                 break;
 
@@ -89,7 +92,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
         }
 
-        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatID}&parse_mode=Markdown&text=${text}`;
+        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatID}&parse_mode=${parseMode}&text=${text}`;
 
         const response = await axios.get(url);
 

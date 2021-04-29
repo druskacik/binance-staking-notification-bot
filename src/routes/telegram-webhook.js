@@ -2,6 +2,7 @@ const express = require('express');
 
 const User = require('../models/User');
 const Asset = require('../models/Asset');
+const AssetDefi = require('../models/AssetDefi');
 
 const subscribeNewAssets = require('./telegram/subscribe');
 const unsubscribeAssets = require('./telegram/unsubscribe');
@@ -9,7 +10,7 @@ const subscribeDefiAssets = require('./telegram/subscribe-defi');
 const unsubscribeDefiAssets = require('./telegram/unsubscribe-defi');
 
 const sendTelegramMessage = require('../services/telegram-bot');
-const getUserSettings = require('./telegram/get-user.settings');
+const getUserSettings = require('./telegram/get-user-settings');
 
 const router = express.Router();
 
@@ -57,15 +58,26 @@ router.route('/')
 
 
                 case '/list':
-                    let availableAssets = await Asset.fetchAll();
-                    availableAssets = availableAssets.toJSON();
-                    availableAssets.sort((a, b) => {
+
+                    let assetsLocked = await Asset.fetchAll();
+                    assetsLocked = assetsLocked.toJSON();
+                    assetsLocked.sort((a, b) => {
                         if (a.asset_name < b.asset_name) { return -1; }
                         if (a.asset_name > b.asset_name) { return 1; }
                         return 0;
                     });
+
+                    let assetsDefi = await AssetDefi.fetchAll();
+                    assetsDefi = assetsDefi.toJSON();
+                    assetsDefi.sort((a, b) => {
+                        if (a.asset_name < b.asset_name) { return -1; }
+                        if (a.asset_name > b.asset_name) { return 1; }
+                        return 0;
+                    });
+
                     await sendTelegramMessage('list', chatID, {
-                        assets: availableAssets,
+                        assetsLocked,
+                        assetsDefi,
                     });
                     break;
 
@@ -73,15 +85,26 @@ router.route('/')
                 case '/settings':
 
                     const userSettings = await getUserSettings(chatID);
-                    const subscribedAssets = userSettings.assets.map(asset => asset.asset_name);
-                    subscribedAssets.sort((a, b) => {
+
+                    const subscribedAssetsLocked = userSettings.assetsLocked.map(asset => asset.asset_name);
+                    subscribedAssetsLocked.sort((a, b) => {
                         if (a < b) { return -1; }
                         if (a > b) { return 1; }
                         return 0;
                     });
+
+                    const subscribedAssetsDefi = userSettings.assetsDefi.map(asset => asset.asset_name);
+                    subscribedAssetsDefi.sort((a, b) => {
+                        if (a < b) { return -1; }
+                        if (a > b) { return 1; }
+                        return 0;
+                    });
+
                     await sendTelegramMessage('settings', chatID, {
-                        subcribeNewAssets: userSettings.subscribe_new_assets,
-                        assets: subscribedAssets,
+                        subcribeNewAssetsLocked: userSettings.subscribe_new_assets,
+                        subcribeNewAssetsDefi: userSettings.subscribe_defi,
+                        assetsLocked: subscribedAssetsLocked,
+                        assetsDefi: subscribedAssetsDefi
                     });
                     break;
 
@@ -98,7 +121,7 @@ router.route('/')
                         const newSubscribedAssets = await subscribeNewAssets(chatID, assets);
                         await sendTelegramMessage('subscribe', chatID, {
                             assets: newSubscribedAssets,
-                            subscribeNew: assets.includes('NEW'),
+                            subscribeNewLocked: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                         });
                     } else {
@@ -116,7 +139,7 @@ router.route('/')
                         const newSubscribedAssets = await subscribeDefiAssets(chatID, assets);
                         await sendTelegramMessage('subscribe', chatID, {
                             assets: newSubscribedAssets,
-                            subscribeNew: assets.includes('NEW'),
+                            subscribeNewDefi: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                         });
                     } else {
@@ -134,6 +157,7 @@ router.route('/')
                         const unsubscribedAssets = await unsubscribeAssets(chatID, assets);
                         await sendTelegramMessage('unsubscribe', chatID, {
                             assets: unsubscribedAssets,
+                            unsubscribeNewLocked: assets.includes('NEW'),
                         });
                     } else {
                         await sendTelegramMessage('unknown command', chatID, {
@@ -150,6 +174,7 @@ router.route('/')
                         const unsubscribedAssets = await unsubscribeDefiAssets(chatID, assets);
                         await sendTelegramMessage('unsubscribe', chatID, {
                             assets: unsubscribedAssets,
+                            unsubscribeNewDefi: assets.includes('NEW'),
                         });
                     } else {
                         await sendTelegramMessage('unknown command', chatID, {

@@ -85,6 +85,23 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
                 break;
 
+            case 'new-activity-available':
+                templateText = await readFileAsync(__dirname + '/messages/new-activity.mustache');
+                text = Mustache.render(templateText, {
+                    ...data.item,
+                });
+                break;
+
+            case 'subscribe-activities':
+                templateText = await readFileAsync(__dirname + '/messages/subscribe-activities.mustache');
+                text = Mustache.render(templateText);
+                break;
+
+            case 'unsubscribe-activities':
+                templateText = await readFileAsync(__dirname + '/messages/unsubscribe-activities.mustache');
+                text = Mustache.render(templateText);
+                break;
+
             default:
                 templateText = await readFileAsync(__dirname + '/messages/help.mustache');
                 text = Mustache.render(templateText, {

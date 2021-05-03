@@ -14,6 +14,4 @@ const getDefiStakingInfo = async () => {
     }
 }
 
-getDefiStakingInfo();
-
 module.exports = getDefiStakingInfo;

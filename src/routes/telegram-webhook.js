@@ -4,6 +4,8 @@ const User = require('../models/User');
 const Asset = require('../models/Asset');
 const AssetDefi = require('../models/AssetDefi');
 
+const knex = require('../../connection');
+
 const subscribeNewAssets = require('./telegram/subscribe');
 const unsubscribeAssets = require('./telegram/unsubscribe');
 const subscribeDefiAssets = require('./telegram/subscribe-defi');
@@ -181,6 +183,30 @@ router.route('/')
                             message: 'Please enter at least one currency to unsubscribe !',
                         });
                     }
+                    break;
+
+                case '/subscribe_activities':
+                    await knex('user')
+                        .where({
+                            telegram_chat_id: chatID,
+                        })
+                        .update({
+                            subscribe_activities: 1,
+                        });
+                    await sendTelegramMessage('subscribe-activities', chatID);
+                    break;
+
+
+                case '/unsubscribe_activities':
+                    await knex('user')
+                        .where({
+                            telegram_chat_id: chatID,
+                        })
+                        .update({
+                            subscribe_activities: 0,
+                        });
+                        await sendTelegramMessage('unsubscribe-activities', chatID);
+                    
                     break;
 
 

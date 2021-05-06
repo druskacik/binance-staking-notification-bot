@@ -133,6 +133,7 @@ const confirmSubscription = async (request, token) => {
 				active: 1,
 				subscribe_new_assets: request.subscribeNewAssetsLocked,
 				subscribe_defi: request.subscribeNewAssetsDefi,
+				subscribe_activities: request.subscribeActivities,
 				token: token,
 			}).save();
 			newUserRow = newUserRow.toJSON();
@@ -153,6 +154,7 @@ const confirmSubscription = async (request, token) => {
 					active: 1,
 					subscribe_new_assets: request.subscribeNewAssetsLocked,
 					subscribe_defi: request.subscribeNewAssetsDefi,
+					subscribe_activities: request.subscribeActivities,
 					token: token,
 				})
 	

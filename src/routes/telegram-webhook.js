@@ -105,6 +105,7 @@ router.route('/')
                     await sendTelegramMessage('settings', chatID, {
                         subcribeNewAssetsLocked: userSettings.subscribe_new_assets,
                         subcribeNewAssetsDefi: userSettings.subscribe_defi,
+                        subscribeActivities: userSettings.subscribe_activities,
                         assetsLocked: subscribedAssetsLocked,
                         assetsDefi: subscribedAssetsDefi
                     });

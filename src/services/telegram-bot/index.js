@@ -109,7 +109,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
         }
 
-        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatID}&parse_mode=${parseMode}&text=${text}`;
+        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatID}&parse_mode=${parseMode}&text=${text}&disable_web_page_preview=1`;
 
         const response = await axios.get(url);
 

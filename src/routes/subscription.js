@@ -3,7 +3,7 @@ const randomstring = require('randomstring');
 
 const knex = require('../../connection');
 const User = require('../models/User');
-const sendConfirmationEmail = require('../mailer/emails/confirm-subscription');
+const sendConfirmationEmail = require('../services/mailer/emails/confirm-subscription');
 
 const router = express.Router();
 

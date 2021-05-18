@@ -2,7 +2,7 @@ const Mustache = require('mustache')
 
 const sendMail = require('../../index');
 
-const readFileAsync = require('../../../utils/read-file-async');
+const readFileAsync = require('../../../../utils/read-file-async');
 
 const sendNewActivityAvailableEmail = async (user, item) => {
   try {

@@ -1,4 +1,4 @@
-const sendDefiProjectAvailableEmail = require('../../mailer/emails/defi-project-available');
+const sendDefiProjectAvailableEmail = require('../../services/mailer/emails/defi-project-available');
 const AssetDefi = require('../../models/AssetDefi');
 const sendTelegramMessage = require('../../services/telegram-bot');
 

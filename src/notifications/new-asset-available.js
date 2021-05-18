@@ -1,4 +1,4 @@
-const sendNewAssetAvailableEmail = require('../mailer/emails/new-asset');
+const sendNewAssetAvailableEmail = require('../services/mailer/emails/new-asset');
 const User = require('../models/User');
 const sendTelegramMessage = require('../services/telegram-bot');
 

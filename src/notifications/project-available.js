@@ -1,4 +1,4 @@
-const sendStakingProjectAvailableEmail = require('../mailer/emails/staking-project-available');
+const sendStakingProjectAvailableEmail = require('../services/mailer/emails/staking-project-available');
 const Asset = require('../models/Asset');
 const sendTelegramMessage = require('../services/telegram-bot');
 

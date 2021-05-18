@@ -1,8 +1,7 @@
-// const sendNewAssetAvailableEmail = require('../.../mailer/emails/new-asset');
 const User = require('../../models/User');
 
 const sendTelegramMessage = require('../../services/telegram-bot');
-const sendNewActivityAvailableEmail = require('../../mailer/emails/new-activity');
+const sendNewActivityAvailableEmail = require('../../services/mailer/emails/new-activity');
 
 const sendNewActivityAvailableNotifications = async (item) => {
     try {

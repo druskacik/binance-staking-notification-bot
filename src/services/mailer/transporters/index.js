@@ -79,6 +79,50 @@ const transporters = {
     }, {
         from: process.env.MAIL_USER_7,
     }),
+    7: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_8,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_8,
+    }),
+    8: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_9,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_9,
+    }),
+    9: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_10,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_10,
+    }),
+    10: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_11,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_11,
+    }),
 }
 
 module.exports = transporters;

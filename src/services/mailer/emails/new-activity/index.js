@@ -22,7 +22,7 @@ const sendNewActivityAvailableEmail = async (user, item) => {
       text,
     }
 
-    const transporterID = user.id % 7;
+    const transporterID = user.id % 11;
     await sendMail(options, transporterID);
 
   } catch (err) {

@@ -12,7 +12,7 @@ describe('email transporters', function() {
             text: 'test',
         }
 
-        const numberOfTransporters = 11;
+        const numberOfTransporters = 22;
         const promises = []
         for (let i = 0; i < numberOfTransporters; i += 1) {
             const promise = new Promise(async (resolve, reject) => {

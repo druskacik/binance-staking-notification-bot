@@ -123,6 +123,127 @@ const transporters = {
     }, {
         from: process.env.MAIL_USER_11,
     }),
+    11: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_12,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_12,
+    }),
+    12: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_13,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_13,
+    }),
+    13: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_14,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_14,
+    }),
+    14: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_15,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_15,
+    }),
+    15: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_16,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_16,
+    }),
+    16: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_17,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_17,
+    }),
+    17: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_18,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_18,
+    }),
+    18: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_19,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_19,
+    }),
+    19: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_20,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_20,
+    }),
+    20: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_21,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_21,
+    }),
+    21: mailer.createTransport({
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: process.env.MAIL_PORT === '465',
+        auth: {
+            user: process.env.MAIL_USER_22,
+            pass: process.env.MAIL_PASS,
+        },
+    }, {
+        from: process.env.MAIL_USER_22,
+    }),
 }
 
 module.exports = transporters;

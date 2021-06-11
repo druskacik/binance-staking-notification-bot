@@ -7,8 +7,11 @@ const app = express();
 const subscription = require('./routes/subscription');
 const stakingInfo = require('./routes/staking-info');
 const telegramBot = require('./routes/telegram-webhook');
+const availabilityHistory = require('./routes/history');
 
-app.use(cors());
+app.use(cors({
+  exposedHeaders: ['Content-Disposition'],
+}));
 
 // enforce HTTPS
 const requireHTTPS = (req, res, next) => {
@@ -30,6 +33,7 @@ app.use(express.static('./dist'));
 
 app.use('/api/subscription', subscription);
 app.use('/api/get-staking-info', stakingInfo);
+app.use('/api/history', availabilityHistory);
 app.use(`/api/telegram${process.env.TELEGRAM_BOT_TOKEN}`, telegramBot);
 
 const listen = (port) => {

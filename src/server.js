@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 
@@ -12,6 +13,8 @@ const availabilityHistory = require('./routes/history');
 app.use(cors({
   exposedHeaders: ['Content-Disposition'],
 }));
+
+app.use(history());
 
 // enforce HTTPS
 const requireHTTPS = (req, res, next) => {

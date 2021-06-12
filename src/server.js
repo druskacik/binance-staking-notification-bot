@@ -14,7 +14,7 @@ app.use(cors({
   exposedHeaders: ['Content-Disposition'],
 }));
 
-app.use(history());
+// app.use(history());
 
 // enforce HTTPS
 const requireHTTPS = (req, res, next) => {

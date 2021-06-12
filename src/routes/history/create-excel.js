@@ -11,7 +11,7 @@ const createExcelLocked = (assetName, duration, dbData) => {
 
     // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
     const rows = dbData.map((row) => ([
-        new Date(row['created_at'] - 2*60*1000),
+        new Date(row['created_at'] - 2*60*60*1000),
         row['became_sold_out'],
     ]));
 
@@ -33,7 +33,7 @@ const createExcelDefi = (assetName, dbData) => {
 
     // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
     const rows = dbData.map((row) => ([
-        new Date(row['created_at'] - 2*60*1000),
+        new Date(row['created_at'] - 2*60*60*1000),
         row['left_available'],
         row['sold_out'],
     ]));

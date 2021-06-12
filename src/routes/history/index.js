@@ -5,6 +5,8 @@ const knex = require('../../../connection');
 const createExcelLocked = require('./create-excel').createExcelLocked;
 const createExcelDefi = require('./create-excel').createExcelDefi;
 
+const logExport = require('../../db/log-export');
+
 const router = express.Router();
 
 router.route('/options')
@@ -65,6 +67,8 @@ router.route('/locked')
             const numDays = req.query.numDays;
             const currentTimestamp = Date.now();
 
+            await logExport(assetName, 'locked', numDays, duration);
+
             let historyDataQuery = knex('availability_history_locked')
                 .where({
                     asset_name: assetName,
@@ -106,6 +110,8 @@ router.route('/defi')
             assetName = assetName.toUpperCase();
             const numDays = req.query.numDays;
             const currentTimestamp = Date.now();
+
+            await logExport(assetName, 'defi', numDays);
 
             let historyDataQuery = knex('availability_history_defi')
                 .where({

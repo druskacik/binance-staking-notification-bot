@@ -14,8 +14,6 @@ app.use(cors({
   exposedHeaders: ['Content-Disposition'],
 }));
 
-// app.use(history());
-
 // enforce HTTPS
 const requireHTTPS = (req, res, next) => {
   // The 'x-forwarded-proto' check is for Heroku
@@ -32,12 +30,13 @@ require('./cronjobs');
 
 app.use(bodyParser.json());
 
-app.use(express.static('./dist'));
-
 app.use('/api/subscription', subscription);
 app.use('/api/get-staking-info', stakingInfo);
 app.use('/api/history', availabilityHistory);
 app.use(`/api/telegram${process.env.TELEGRAM_BOT_TOKEN}`, telegramBot);
+
+app.use(history());
+app.use(express.static('./dist'));
 
 const listen = (port) => {
   app.listen(port, () => {

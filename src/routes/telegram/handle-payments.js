@@ -52,7 +52,7 @@ const handleTransaction = async (telegramUpdate) => {
         telegram_chat_id: chatID,
         price_paid: price,
         currency: currency,
-        duration: 7,
+        duration: duration,
     })
 
 }

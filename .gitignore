@@ -8,3 +8,5 @@ client
 
 .env
 .env.production
+
+.vscode

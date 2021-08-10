@@ -9,6 +9,7 @@ const sendNewDefiAssetAvailableNotifications = async (asset) => {
             .where({
                 subscribe_defi: 1,
                 active: 1,
+                is_pro: 1,
             })
             .fetchAll();
         users = users.toJSON();

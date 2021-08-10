@@ -10,6 +10,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
         let text;
         let templateText;
         let parseMode = 'HTML';
+        let replyMarkup;
 
         switch (messageType) {
             case 'start':
@@ -102,6 +103,51 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 text = Mustache.render(templateText);
                 break;
 
+            case 'get-premium':
+                templateText = await readFileAsync(__dirname + '/messages/get-premium.mustache');
+                text = Mustache.render(templateText, {
+                    ...data,
+                });
+                replyMarkup = {
+                    inline_keyboard: [
+                        [{
+                            text: 'SUBSCRIPTION 1 WEEK (2€)',
+                            callback_data: '1WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 4 WEEKS (5€)',
+                            callback_data: '4WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 1 YEAR (30€)',
+                            callback_data: '1YEAR',
+                        }]
+                    ]
+                };
+                break;
+
+            case 'successful-payment':
+                templateText = await readFileAsync(__dirname + '/messages/successful-payment.mustache');
+                text = Mustache.render(templateText, {
+                    subscriptionEndDate: data.subscriptionEndDate,
+                });
+                break;
+
+            case 'subscription-ended':
+                templateText = await readFileAsync(__dirname + '/messages/subscription-ended.mustache');
+                text = Mustache.render(templateText);
+                break;
+
+            case 'support':
+                templateText = await readFileAsync(__dirname + '/messages/support.mustache');
+                text = Mustache.render(templateText);
+                break;
+
+            case 'terms':
+                templateText = await readFileAsync(__dirname + '/messages/terms-and-conditions.mustache');
+                text = Mustache.render(templateText);
+                break;
+
             default:
                 templateText = await readFileAsync(__dirname + '/messages/help.mustache');
                 text = Mustache.render(templateText, {
@@ -109,9 +155,17 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
         }
 
-        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${chatID}&parse_mode=${parseMode}&text=${text}&disable_web_page_preview=1`;
+        const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
-        const response = await axios.get(url);
+        const response = await axios.get(url, {
+            params: {
+                chat_id: chatID,
+                parse_mode: parseMode,
+                text: text,
+                disable_web_page_preview: 1,
+                reply_markup: replyMarkup,
+            }
+        });
 
         return response;
 

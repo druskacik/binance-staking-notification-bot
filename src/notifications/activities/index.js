@@ -10,6 +10,7 @@ const sendNewActivityAvailableNotifications = async (item) => {
             .where({
                 subscribe_activities: 1,
                 active: 1,
+                is_pro: 1,
             })
             .fetchAll();
         users = users.toJSON();

@@ -12,7 +12,10 @@ const sendStakingProjectAvailableNotification = async (projects, assetID) => {
             .fetch({
                 withRelated: [{
                     users: function (query) {
-                        query.where({ active: 1 }).select();
+                        query.where({
+                            active: 1,
+                            is_pro: 1,
+                        }).select();
                     },
                 }],
             })

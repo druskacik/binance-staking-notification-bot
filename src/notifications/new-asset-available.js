@@ -9,6 +9,7 @@ const sendNewAssetAvailableNotifications = async (asset) => {
             .where({
                 subscribe_new_assets: 1,
                 active: 1,
+                is_pro: 1,
             })
             .fetchAll();
         users = users.toJSON();

@@ -19,3 +19,11 @@ new currency
 {{ #subscribeActivities }}
 I will also notify you when new lending activity appears on Binance.
 {{ /subscribeActivities }}
+
+{{ #hasPremium }}
+Your subscription will end at <b>{{ subscriptionEndDate }}</b> (UTC time).
+{{ /hasPremium }}
+{{ ^hasPremium }}
+<b>IMPORTANT NOTE:</b> your subscription/free trial has ended and the bot will not send any notifications to this chat.
+To activate your subscription, use the /get_premium command.
+{{ /hasPremium }}

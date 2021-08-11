@@ -14,6 +14,11 @@ const User = bookshelf.Model.extend({
         const UserDefiNotification = require('./UserDefiNotification');
         return this.belongsToMany(AssetDefi).through(UserDefiNotification);
     },
+    assetsLockedSavings: function () {
+        const AssetLockedSavings = require('./AssetLockedSavings');
+        const UserLockedSavingsNotification = require('./UserLockedSavingsNotification');
+        return this.belongsToMany(AssetLockedSavings).through(UserLockedSavingsNotification);
+    }
 });
 
 module.exports = bookshelf.model('User', User);

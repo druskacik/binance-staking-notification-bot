@@ -72,6 +72,14 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 });
                 break;
 
+            case 'locked-savings-project-available':
+                templateText = await readFileAsync(__dirname + '/messages/locked-savings-project-available.mustache');
+                text = Mustache.render(templateText, {
+                    asset: data.projects[0].asset,
+                    projects: data.projects,
+                });
+                break;
+
             case 'new-asset-available':
                 templateText = await readFileAsync(__dirname + '/messages/new-asset.mustache');
                 text = Mustache.render(templateText, {
@@ -81,6 +89,13 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
 
             case 'new-defi-asset-available':
                 templateText = await readFileAsync(__dirname + '/messages/new-defi-asset.mustache');
+                text = Mustache.render(templateText, {
+                    ...data.asset,
+                });
+                break;
+
+            case 'new-locked-savings-asset-available':
+                templateText = await readFileAsync(__dirname + '/messages/new-locked-savings-asset-available.mustache');
                 text = Mustache.render(templateText, {
                     ...data.asset,
                 });

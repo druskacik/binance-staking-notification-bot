@@ -4,6 +4,7 @@ const dayjs = require('dayjs');
 const User = require('../models/User');
 const Asset = require('../models/Asset');
 const AssetDefi = require('../models/AssetDefi');
+const AssetLockedSavings = require('../models/AssetLockedSavings');
 
 const knex = require('../../connection');
 
@@ -137,9 +138,19 @@ router.route('/')
                         return 0;
                     });
 
+                    let assetsLockedSavings = await AssetLockedSavings.fetchAll();
+                    assetsLockedSavings = assetsLockedSavings.toJSON();
+                    assetsLockedSavings.sort((a, b) => {
+                        if (a.asset_name < b.asset_name) { return -1; }
+                        if (a.asset_name > b.asset_name) { return 1; }
+                        return 0;
+                    });
+
+
                     await sendTelegramMessage('list', chatID, {
                         assetsLocked,
                         assetsDefi,
+                        assetsLockedSavings,
                     });
                     break;
 
@@ -147,30 +158,7 @@ router.route('/')
                 case '/settings':
 
                     const userSettings = await getUserSettings(chatID);
-
-                    const subscribedAssetsLocked = userSettings.assetsLocked.map(asset => asset.asset_name);
-                    subscribedAssetsLocked.sort((a, b) => {
-                        if (a < b) { return -1; }
-                        if (a > b) { return 1; }
-                        return 0;
-                    });
-
-                    const subscribedAssetsDefi = userSettings.assetsDefi.map(asset => asset.asset_name);
-                    subscribedAssetsDefi.sort((a, b) => {
-                        if (a < b) { return -1; }
-                        if (a > b) { return 1; }
-                        return 0;
-                    });
-
-                    await sendTelegramMessage('settings', chatID, {
-                        subcribeNewAssetsLocked: userSettings.subscribe_new_assets,
-                        subcribeNewAssetsDefi: userSettings.subscribe_defi,
-                        subscribeActivities: userSettings.subscribe_activities,
-                        assetsLocked: subscribedAssetsLocked,
-                        assetsDefi: subscribedAssetsDefi,
-                        hasPremium: userSettings.is_pro,
-                        subscriptionEndDate: convertTimeToUTC(userSettings.subscription_end_date),
-                    });
+                    await sendTelegramMessage('settings', chatID, userSettings);
                     break;
 
 
@@ -188,10 +176,11 @@ router.route('/')
                             assets: newSubscribedAssets,
                             subscribeNewLocked: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
+                            stakingType: 'locked staking',
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
-                            message: 'Please enter at least one currency to subscribe !',
+                        await sendTelegramMessage('custom-message', chatID, {
+                            message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe ada',
                         });
                     }
                     break;
@@ -206,10 +195,11 @@ router.route('/')
                             assets: newSubscribedAssets,
                             subscribeNewDefi: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
+                            stakingType: 'DeFi staking',
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
-                            message: 'Please enter at least one currency to subscribe !',
+                        await sendTelegramMessage('custom-message', chatID, {
+                            message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe_defi btc',
                         });
                     }
                     break;
@@ -223,10 +213,11 @@ router.route('/')
                             assets: newSubscribedAssets,
                             subscribeNewLockedSavings: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
+                            stakingType: 'Locked Savings',
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
-                            message: 'Please enter at least one currency to subscribe !',
+                        await sendTelegramMessage('custom-message', chatID, {
+                            message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe_locked_savings btc',
                         });
                     }
                     break;
@@ -242,7 +233,7 @@ router.route('/')
                             unsubscribeNewLocked: assets.includes('NEW'),
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
+                        await sendTelegramMessage('custom-message', chatID, {
                             message: 'Please enter at least one currency to unsubscribe !',
                         });
                     }
@@ -259,7 +250,7 @@ router.route('/')
                             unsubscribeNewDefi: assets.includes('NEW'),
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
+                        await sendTelegramMessage('custom-message', chatID, {
                             message: 'Please enter at least one currency to unsubscribe !',
                         });
                     }
@@ -275,7 +266,7 @@ router.route('/')
                             unsubscribeNewLockedSavings: assets.includes('NEW'),
                         });
                     } else {
-                        await sendTelegramMessage('unknown command', chatID, {
+                        await sendTelegramMessage('custom-message', chatID, {
                             message: 'Please enter at least one currency to unsubscribe !',
                         });
                     }
@@ -326,7 +317,7 @@ router.route('/')
                     break;
 
                 default:
-                    await sendTelegramMessage('unknown command', chatID, {});
+                    await sendTelegramMessage('unknown-command', chatID, {});
             }
 
             res.status(200)

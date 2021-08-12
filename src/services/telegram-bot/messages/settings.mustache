@@ -1,3 +1,7 @@
+{{ #followsNothing }}
+No notifications set up! Use the /help command to get instructions on how to use me.
+{{ /followsNothing }}
+{{ #followsLocked }}
 I will notify you when locked staking for one of the following currencies becomes available:
 
 {{ #assetsLocked }}
@@ -6,7 +10,9 @@ I will notify you when locked staking for one of the following currencies become
 {{ #subcribeNewAssetsLocked }}
 new currency
 {{ /subcribeNewAssetsLocked }}
+{{ /followsLocked }}
 
+{{ #followsDefi }}
 I will notify you when DeFi staking for one of the following currencies becomes available:
 
 {{ #assetsDefi }}
@@ -15,6 +21,18 @@ I will notify you when DeFi staking for one of the following currencies becomes 
 {{ #subcribeNewAssetsDefi }}
 new currency
 {{ /subcribeNewAssetsDefi }}
+{{ /followsDefi }}
+
+{{ #followsLockedSavings }}
+I will notify you when Locked Savings option for one of the following currencies becomes available:
+
+{{ #assetsLockedSavings }}
+{{.}}
+{{ /assetsLockedSavings }}
+{{ #subscribeNewAssetsLockedSavings }}
+new currency
+{{ /subscribeNewAssetsLockedSavings }}
+{{ /followsLockedSavings }}
 
 {{ #subscribeActivities }}
 I will also notify you when new lending activity appears on Binance.

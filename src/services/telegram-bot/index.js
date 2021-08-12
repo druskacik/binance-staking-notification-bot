@@ -29,6 +29,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                 text = Mustache.render(templateText, {
                     assetsLocked: data.assetsLocked,
                     assetsDefi: data.assetsDefi,
+                    assetsLockedSavings: data.assetsLockedSavings,
                 });
                 break;
 
@@ -161,6 +162,10 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             case 'terms':
                 templateText = await readFileAsync(__dirname + '/messages/terms-and-conditions.mustache');
                 text = Mustache.render(templateText);
+                break;
+
+            case 'custom-message':
+                text = data.message;
                 break;
 
             default:

@@ -25,7 +25,7 @@ const subscribeDefiAssets = async (chatID, assets) => {
 
         // delete if exist and then create again
         // not very clever, but fast
-        // TOOD: make this better
+        // TODO: make this better
 
         if (dbAssets.length > 0) {
 

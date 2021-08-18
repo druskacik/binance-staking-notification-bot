@@ -111,7 +111,9 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
 
             case 'subscribe-activities':
                 templateText = await readFileAsync(__dirname + '/messages/subscribe-activities.mustache');
-                text = Mustache.render(templateText);
+                text = Mustache.render(templateText, {
+                    hasPremium: data.hasPremium,
+                });
                 break;
 
             case 'unsubscribe-activities':

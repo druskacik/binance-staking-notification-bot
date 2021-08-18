@@ -11,12 +11,17 @@ You now follow these currencies ({{ stakingType }}):
 {{ /found }}
 
 {{ #notFound }}
-These currencies were not found on the list:
+These currencies were not found on the /list:
 
 {{ #notFoundAssets }}
 {{.}}
 {{ /notFoundAssets }}
 {{ /notFound }}
+
+{{ ^hasPremium }}
+<b>IMPORTANT NOTE:</b> your subscription/free trial has ended and the bot will not send any notifications to this chat.
+To activate your subscription, use the /get_premium command.
+{{ /hasPremium }}
 
 See your current notification settings:
 /settings

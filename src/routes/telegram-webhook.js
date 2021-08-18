@@ -82,7 +82,7 @@ router.route('/')
             }
 
             const chatID = message.chat.id;
-            await addUserIfNotExists(chatID); // TODO: this is unnecessarily time consuming, refactor
+            const hasPremium = await addUserIfNotExists(chatID); // TODO: this is unnecessarily time consuming, refactor
 
             // this means user's payment was successful
             if (message.successful_payment) {
@@ -180,6 +180,7 @@ router.route('/')
                             subscribeNewLocked: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                             stakingType: 'locked staking',
+                            hasPremium,
                         });
                     } else {
                         await sendTelegramMessage('custom-message', chatID, {
@@ -199,6 +200,7 @@ router.route('/')
                             subscribeNewDefi: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                             stakingType: 'DeFi staking',
+                            hasPremium,
                         });
                     } else {
                         await sendTelegramMessage('custom-message', chatID, {
@@ -217,6 +219,7 @@ router.route('/')
                             subscribeNewLockedSavings: assets.includes('NEW'),
                             notFoundAssets: assets.filter(asset => !newSubscribedAssets.includes(asset) && asset !== 'NEW'),
                             stakingType: 'Locked Savings',
+                            hasPremium,
                         });
                     } else {
                         await sendTelegramMessage('custom-message', chatID, {
@@ -283,7 +286,9 @@ router.route('/')
                         .update({
                             subscribe_activities: 1,
                         });
-                    await sendTelegramMessage('subscribe-activities', chatID);
+                    await sendTelegramMessage('subscribe-activities', chatID, {
+                        hasPremium,
+                    });
                     break;
 
 
@@ -337,6 +342,7 @@ router.route('/')
             }
     })
 
+// TODO: refactor, use fetch instead of fetchAll
 const addUserIfNotExists = async (chatID) => {
     try {
         let user = await User.forge().where({
@@ -359,7 +365,11 @@ const addUserIfNotExists = async (chatID) => {
                 subscription_end_date: subscriptionEndDate,
             }).save();
             console.log('New Telegram user created !');
+            return true;
         }
+
+        return user[0].is_pro;
+
     } catch(err) {
         throw err;
     }

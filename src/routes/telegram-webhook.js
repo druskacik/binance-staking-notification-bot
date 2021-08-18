@@ -21,7 +21,7 @@ const telegramPaymentsHandler = require('../services/telegram-bot/payments');
 const getUserSettings = require('./telegram/get-user-settings');
 
 const convertTimeToUTC = require('../utils/convert-time-to-utc');
-const saveTelegramMessage = require('../utils/save-message');
+const telegramTracker = require('../utils/telegram-tracker');
 
 const router = express.Router();
 
@@ -57,6 +57,7 @@ router.route('/')
             if (req.body.callback_query) {
                 const callbackQuery = req.body.callback_query;
                 const chatID = callbackQuery.from.id;
+                await telegramTracker.saveTelegramButtonClick(chatID, callbackQuery.data);
                 await telegramPaymentsHandler.sendTelegramInvoice(chatID, {
                     subscriptionType: callbackQuery.data,
                     previousMessageID: callbackQuery.message.message_id,
@@ -107,7 +108,7 @@ router.route('/')
                 return;
             }
 
-            await saveTelegramMessage(chatID, messageText);
+            await telegramTracker.saveTelegramMessage(chatID, messageText);
 
             let command = messageText.split(' ')[0];
             if (command.includes('@')) {

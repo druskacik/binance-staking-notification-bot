@@ -18,7 +18,12 @@ export default {
             // { rel: 'icon', type: 'image/x-icon', href: '/favicon-32x32.png' },
         ],
         script: [
-            { src: 'https://analytics.bswatcher.com/umami.js', async: true, defer: true },
+            {
+                src: 'https://analytics.bswatcher.com/umami.js',
+                'data-website-id': 'b7bafa37-84b4-46bd-8ce2-84bcce812dd3',
+                async: true,
+                defer: true,
+            },
         ]
     },
 
@@ -44,6 +49,9 @@ export default {
     modules: [
         '@nuxtjs/axios',
     ],
+    // buildModules: [
+    //     'nuxt-purgecss',
+    // ],
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {

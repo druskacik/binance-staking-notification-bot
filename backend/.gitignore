@@ -1,0 +1,12 @@
+node_modules
+
+package-lock.json
+
+client
+
+*.docx
+
+.env
+.env.production
+
+.vscode

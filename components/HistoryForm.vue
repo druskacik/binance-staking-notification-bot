@@ -132,7 +132,7 @@
 
 <script>
 
-import { Modal } from 'ant-design-vue/lib/modal';
+import { Modal } from 'ant-design-vue';
 
 import AppFormSubmitButton from './AppFormSubmitButton.vue';
 

@@ -14,7 +14,7 @@
           system that would notify users about availability of its staking
           options. This bot provides this service by sending notification (Telegram or email)
           immediately after a specified staking option, which was previously sold out,
-          becomes avaliable. This is possible by constant monitoring of
+          becomes available. This is possible by constant monitoring of
           the Binance website (
           <a href="https://www.binance.com/en/pos" target="_blank">
             https://www.binance.com/en/pos

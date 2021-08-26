@@ -37,7 +37,6 @@ router.route('/')
 
                 try {
     
-                    await handleTransaction(req.body);
                     await telegramPaymentsHandler.sendTelegramCheckoutSuccess(preCheckoutQueryID);
 
                     res.status(200)
@@ -87,6 +86,7 @@ router.route('/')
 
             // this means user's payment was successful
             if (message.successful_payment) {
+                await handleTransaction(message);
                 // send message about successful payment
                 let user = await User.where({
                     telegram_chat_id: chatID,

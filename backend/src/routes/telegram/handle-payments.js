@@ -4,11 +4,11 @@ const knex = require('../../../connection');
 
 const User = require('../../models/User');
 
-const handleTransaction = async (telegramUpdate) => {
+const handleTransaction = async (message) => {
     
-    const chatID = telegramUpdate.pre_checkout_query.from.id;
-    const currency = telegramUpdate.pre_checkout_query.currency;
-    const price = telegramUpdate.pre_checkout_query.total_amount;
+    const chatID = message.chat.id;
+    const currency = message.successful_payment.currency;
+    const price = message.successful_payment.total_amount;
 
     let duration;
     switch (price) {

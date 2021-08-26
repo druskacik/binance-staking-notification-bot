@@ -17,6 +17,21 @@
 <script>
 
 export default {
+    head: {
+        title: 'Binance Staking - historical data',
+        meta: [
+            {
+                hid: 'description-history',
+                name: 'description',
+                content: 'Binance staking - export historical data about staking availability',
+            },
+            {
+                hid: 'keywords-history',
+                name: 'keywords',
+                content: 'Binance, cryptocurrency staking, history, export, historical data',
+            },
+        ],
+    },
     async asyncData ({ $axios, $config }) {
         const response = await $axios.$get(`${$config.baseUrl}/api/history/options`);
         return {

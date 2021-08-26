@@ -10,8 +10,6 @@ export default {
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-            { name: 'keywords', content: 'Binance, cryptocurrency staking, notification bot' },
-            { hid: 'description', name: 'description', content: 'Binance Staking Notification Bot - get notified when chosen staking options become available again.' },
             { name: 'format-detection', content: 'telephone=no' },
         ],
         link: [

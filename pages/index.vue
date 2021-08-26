@@ -17,6 +17,19 @@
 <script>
 
 export default {
+    head: {
+        meta: [
+            {
+                name: 'keywords',
+                content: 'Binance, cryptocurrency staking, binance staking sold out, notifications, alerts, notification bot',
+            },
+            {
+                hid: 'description',
+                name: 'description',
+                content: 'Binance Staking Notification Bot - get notified when chosen staking options become available again.',
+            },
+        ],
+    },
     async asyncData ({ $axios, $config }) {
         const url = `${$config.baseUrl}/api/get-staking-info`;
         const response = await $axios.$get(url);

@@ -46,6 +46,21 @@
 <script>
 
 export default {
+    head: {
+        title: 'Why the bot is not for free',
+        meta: [
+            {
+                hid: 'description-why',
+                name: 'description',
+                content: 'Why the bswatcher.com bot is not for free?',
+            },
+            {
+                hid: 'keywords-why',
+                name: 'keywords',
+                content: 'premium, Telegram, notification bot',
+            },
+        ],
+    },
     name: 'BlogPayments',
 };
 </script>

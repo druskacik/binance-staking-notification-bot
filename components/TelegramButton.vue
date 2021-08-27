@@ -1,7 +1,7 @@
 <template>
     <div class="telegram-button--main">
         <a
-            class="telegram-button__button"
+            class="telegram-button__button umami--click--telegram-button"
             href="https://t.me/bstaking_bot"
             target="_blank"
         >

@@ -95,6 +95,7 @@
         <app-form-submit-button
             :onClick="submitRequest"
             :loading="loading"
+            class="umami--click--submit-button"
         />
     </div>
 </template>

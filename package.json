@@ -1,5 +1,5 @@
 {
-  "name": "client-nuxt",
+  "name": "bswatcher.com",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,8 @@
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
-    "webpack": "nuxt webpack"
+    "webpack": "nuxt webpack",
+    "backend": "nodemon index.js"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
@@ -32,7 +33,8 @@
     "nuxt": "^2.15.7",
     "pg": "^8.5.1",
     "postgresql": "0.0.1",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "redirect-ssl": "^3.0.0"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",
@@ -40,6 +42,8 @@
     "@nuxtjs/eslint-module": "^3.0.2",
     "eslint": "^7.29.0",
     "eslint-plugin-nuxt": "^2.0.0",
-    "eslint-plugin-vue": "^7.12.1"
+    "eslint-plugin-vue": "^7.12.1",
+    "nodemon": "^2.0.12",
+    "nuxt-purgecss": "^1.0.0"
   }
 }

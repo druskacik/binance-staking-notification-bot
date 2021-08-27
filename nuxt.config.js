@@ -1,5 +1,7 @@
 const path = require('path');
 
+const redirectSSL = require('redirect-ssl');
+
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
@@ -61,6 +63,9 @@ export default {
     },
     buildDir: 'dist',
     serverMiddleware: [
+        redirectSSL.create({
+            enabled: process.env.NODE_ENV === 'production',
+        }),
         { path: '/api', handler: '~/backend/index.js' },
     ],
     server: {

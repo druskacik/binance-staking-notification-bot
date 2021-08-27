@@ -21,7 +21,8 @@ const requireHTTPS = (req, res, next) => {
     }
     next();
 }
-  
+
+app.enable('trust proxy');
 app.use(requireHTTPS);
 
 // starts all cronjobs

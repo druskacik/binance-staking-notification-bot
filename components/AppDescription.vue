@@ -36,6 +36,9 @@
           and are a recommended way to use this bot. Telegram is better for both you and me -
           for you it's faster and more private, for me it's more cost-effective.
         </p>
+        <div>
+            <telegram-button />
+        </div>
         <h1 class="description__content__header">
           Historical Data
         </h1>

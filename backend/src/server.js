@@ -10,8 +10,19 @@ const telegramBot = require('./routes/telegram-webhook');
 const availabilityHistory = require('./routes/history');
 
 app.use(cors({
-  exposedHeaders: ['Content-Disposition'],
+    exposedHeaders: ['Content-Disposition'],
 }));
+
+// enforce HTTPS
+const requireHTTPS = (req, res, next) => {
+    // The 'x-forwarded-proto' check is for Heroku
+    if (!req.secure && req.get('x-forwarded-proto') !== 'https' && process.env.NODE_ENV === "production") {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
+  
+app.use(requireHTTPS);
 
 // starts all cronjobs
 require('./cronjobs');

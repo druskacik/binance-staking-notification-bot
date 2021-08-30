@@ -171,7 +171,10 @@ const confirmSubscription = async (request, token) => {
 				.del()
 		}
 	
-		const subscribedAssetsLocked = request.subscribedAssetsLocked.map((assetID) => ({
+        // for legacy subscription requests, keep this here for a while
+        // delete it when the support will be fully dropped
+		let subscribedAssetsLocked = request.subscribedAssetsLocked || [];
+        subscribedAssetsLocked = subscribedAssetsLocked.map((assetID) => ({
 			user_id: userID,
 			asset_id: assetID,
 		}));
@@ -179,7 +182,8 @@ const confirmSubscription = async (request, token) => {
 			await knex('user_asset_notification').insert(subscribedAssetsLocked);
 		}
 
-		const subscribedAssetsDefi = request.subscribedAssetsDefi.map((assetID) => ({
+        let subscribedAssetsDefi = request.subscribedAssetsDefi || [];
+		subscribedAssetsDefi = subscribedAssetsDefi.map((assetID) => ({
 			user_id: userID,
 			asset_defi_id: assetID,
 		}));

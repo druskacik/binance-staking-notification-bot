@@ -5,10 +5,7 @@
         <app-description />
       </div>
       <div class="home__description-and-form__element">
-        <app-form
-          :optionsLocked="optionsLocked"
-          :optionsDefi="optionsDefi"
-        />
+        <app-form />
       </div>
     </div>
   </div>
@@ -29,35 +26,6 @@ export default {
                 content: 'Binance Staking Notification Bot - get notified when chosen staking options become available again.',
             },
         ],
-    },
-    async asyncData ({ $axios, $config }) {
-        const url = `${$config.baseUrl}/api/get-staking-info`;
-        const response = await $axios.$get(url);
-
-        const optionsLocked = response.assetsLocked.map(asset => ({
-            label: asset.asset_name,
-            value: asset.id,
-        }));
-        optionsLocked.sort((a, b) => {
-            if (a.label < b.label) { return -1; }
-            if (a.label > b.label) { return 1; }
-            return 0;
-        });
-
-        const optionsDefi = response.assetsDefi.map(asset => ({
-            label: asset.asset_name,
-            value: asset.id,
-        }));
-        optionsDefi.sort((a, b) => {
-            if (a.label < b.label) { return -1; }
-            if (a.label > b.label) { return 1; }
-            return 0;
-        });
-
-        return {
-            optionsLocked,
-            optionsDefi,
-        };
     },
 };
 </script>

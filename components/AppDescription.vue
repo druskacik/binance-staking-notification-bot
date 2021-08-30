@@ -12,7 +12,7 @@
           usually under high demand and the most lucrative staking options
           are sold out most of the time. Binance doesn’t have a built-in
           system that would notify users about availability of its staking
-          options. This bot provides this service by sending notification (Telegram or email)
+          options. This bot provides this service by sending a notification (via Telegram)
           immediately after a specified staking option, which was previously sold out,
           becomes available. This is possible by constant monitoring of
           the Binance website (
@@ -27,14 +27,15 @@
           you will get notified when any of them becomes available.
         </p>
         <p>
-          To take part, fill in the form on this website to receive notifications on email.
-          Alternatively, chat up with the bot at
+          To take part, all you need is a
+          <a href="https://telegram.org/" target="_blank">
+            Telegram
+          </a>
+          app. To set up notifications, chat up with the bot at
           <a href="https://t.me/bstaking_bot" target="_blank">
             https://t.me/bstaking_bot
           </a>
-          to receive notifications on Telegram. Telegram notifications work substantially faster
-          and are a recommended way to use this bot. Telegram is better for both you and me -
-          for you it's faster and more private, for me it's more cost-effective.
+          and follow his instructions.
         </p>
         <div>
             <telegram-button />
@@ -62,7 +63,6 @@
           <NuxtLink to="/why-the-bot-is-not-for-free-anymore">
             in this blog
           </NuxtLink>.
-          Email notifications remain free for the time being but that will change in the following weeks.
         </p>
         <p>
           The code behind this bot is available on Github:

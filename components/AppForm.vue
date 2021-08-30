@@ -2,12 +2,8 @@
     <div class="app-form">
         <h1>Set up notifications</h1>
         <div class="app-form__description">
-            To set up email notifications, fill in the form below. To receive notifications on Telegram, chat up with the bot at
-            <a href="https://t.me/bstaking_bot" target="_blank">
-                https://t.me/bstaking_bot
-            </a>
-            and follow his instructions.
-            Please note that currencies are usually updated at the same time so it doesn't make sense to follow more than 2-3 currencies.
+            Email notifications support was dropped due to high traffic and full features of the bot are now available only on Telegram.
+            However, as a legacy, you can set up email notifications for new listings of staking options on Binance.
         </div>
         <div class="app-form__email-input">
             <label class="app-form__label">Email address: </label>
@@ -18,7 +14,7 @@
                 placeholder="@"
             />
         </div>
-        <div>
+        <div class="app-form__part">
             <h4>Locked Staking</h4>
             <div class="app-form__new-assets-checkbox">
                 <a-checkbox
@@ -27,27 +23,8 @@
                     Notify me when locked staking of a new currency becomes available
                 </a-checkbox>
             </div>
-            <div class="app-form__assets-checkbox-group__label">
-                Notify me about availability of locked staking in following currencies:
-            </div>
-            <a-checkbox-group
-                v-model="assetIDsLocked"
-                class="app-form__assets-checkbox-group"
-            >
-                <div
-                    v-for="option in optionsLocked"
-                    :key="option.value"
-                    class="app-form__assets-checkbox-group__checkbox"
-                >
-                    <a-checkbox
-                        :value="option.value"
-                    >
-                        {{ option.label }}
-                    </a-checkbox>
-                </div>
-            </a-checkbox-group>
         </div>
-        <div>
+        <div class="app-form__part">
             <h4>DeFi Staking</h4>
             <div class="app-form__new-assets-checkbox">
                 <a-checkbox
@@ -56,27 +33,8 @@
                     Notify me when DeFi staking of a new currency becomes available
                 </a-checkbox>
             </div>
-            <div class="app-form__assets-checkbox-group__label">
-                Notify me about availability of DeFi staking in following currencies:
-            </div>
-            <a-checkbox-group
-                v-model="assetIDsDefi"
-                class="app-form__assets-checkbox-group"
-            >
-                <div
-                    v-for="option in optionsDefi"
-                    :key="option.value"
-                    class="app-form__assets-checkbox-group__checkbox"
-                >
-                    <a-checkbox
-                        :value="option.value"
-                    >
-                        {{ option.label }}
-                    </a-checkbox>
-                </div>
-            </a-checkbox-group>
         </div>
-        <div>
+        <div class="app-form__part">
             <h4>Activities</h4>
             <div class="app-form__assets-checkbox-group__label">
                 This concerns tab Activities at
@@ -111,33 +69,17 @@ export default {
         AppFormSubmitButton,
     },
     name: 'app-form',
-    data() {
+    data () {
         return {
             email: '',
             subscribeNewAssetsLocked: false,
             subscribeNewAssetsDefi: false,
             subscribeActivities: false,
-            assetIDsLocked: [],
-            assetIDsDefi: [],
             loading: false,
         };
     },
-    props: {
-        optionsLocked: {
-            type: Array,
-            default () {
-                return [];
-            },
-        },
-        optionsDefi: {
-            type: Array,
-            default () {
-                return [];
-            },
-        },
-    },
     methods: {
-        async submitRequest() {
+        async submitRequest () {
             try {
                 if (!this.emailIsValid(this.email)) {
                     this.warning('Please enter valid email address !');
@@ -154,9 +96,7 @@ export default {
                 const parameters = {
                     email: this.email,
                     subscribeNewAssetsLocked: this.subscribeNewAssetsLocked,
-                    subscribedAssetsLocked: this.assetIDsLocked,
                     subscribeNewAssetsDefi: this.subscribeNewAssetsDefi,
-                    subscribedAssetsDefi: this.assetIDsDefi,
                     subscribeActivities: this.subscribeActivities,
                 };
 
@@ -180,7 +120,7 @@ export default {
         error() {
             Modal.error({
                 title: 'Error !',
-                content: 
+                content:
                     <div>
                         <p>
                             Something went wrong, please try again later.
@@ -193,21 +133,17 @@ export default {
                 title: message,
             });
         },
-        emailIsValid(email) {
+        emailIsValid (email) {
             if (email.length === 0) {
                 return false;
             }
             const re = /\S+@\S+\.\S+/;
             return re.test(email);
         },
-        formIsEmpty() {
-            return !this.subscribeNewAssetsLocked
-                && !this.subscribeNewAssetsDefi
-                && !this.subscribeActivities
-                && this.assetIDsLocked.length === 0
-                && this.assetIDsDefi.length === 0;
+        formIsEmpty () {
+            return !this.subscribeNewAssetsLocked && !this.subscribeNewAssetsDefi && !this.subscribeActivities;
         },
-    }
+    },
 };
 </script>
 
@@ -240,6 +176,10 @@ export default {
     margin-right: 1rem;
 }
 
+.app-form__part {
+    margin-top: 1.2rem;
+}
+
 .app-form__email-input__field {
     max-width: 20rem;
 }
@@ -249,18 +189,8 @@ export default {
     margin: 1rem 0 0 0;
 }
 
-.app-form__assets-checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 .app-form__assets-checkbox-group__label {
     margin: 1rem 0 1rem 0.2rem;
-    text-align: left;
-}
-
-.app-form__assets-checkbox-group__checkbox {
-    width: 8rem;
     text-align: left;
 }
 
@@ -277,8 +207,8 @@ h4 {
         border-radius: 0;
     }
 
-    .app-form__assets-checkbox-group__checkbox {
-        width: 50%;
+    .app-form__part {
+        margin-top: 0.1rem;
     }
 
     .app-form__email-input {

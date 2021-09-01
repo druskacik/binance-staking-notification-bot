@@ -1,7 +1,5 @@
 const axios = require('axios');
-const Mustache = require('mustache')
-
-const readFileAsync = require('../../utils/read-file-async');
+const randomstring = require('randomstring');
 
 const sendTelegramInvoice = async (chatID, {
     subscriptionType,
@@ -51,6 +49,13 @@ const sendTelegramInvoice = async (chatID, {
             }
         });
 
+        const randomHash = randomstring.generate({
+            length: 7,
+            charset: 'numeric',
+        });
+        // unique string representing the invoice
+        const startParameter = `${randomHash}${Date.now()}`;
+
         const response = await axios.get(url, {
             params: {
                 chat_id: chatID,
@@ -65,6 +70,7 @@ const sendTelegramInvoice = async (chatID, {
                         amount: amount,
                     },
                 ]),
+                start_parameter: startParameter,
             },
         });
 

@@ -1,4 +1,3 @@
-const sendDefiProjectAvailableEmail = require('../../services/mailer/emails/defi-project-available');
 const AssetDefi = require('../../models/AssetDefi');
 const sendTelegramMessage = require('../../services/telegram-bot');
 
@@ -13,7 +12,6 @@ const sendDefiStakingProjectAvailableNotification = async (projects, assetID) =>
                 withRelated: [{
                     users: function (query) {
                         query.where({
-                            active: 1,
                             is_pro: 1,
                         }).select();
                     },
@@ -22,9 +20,7 @@ const sendDefiStakingProjectAvailableNotification = async (projects, assetID) =>
         asset = asset.toJSON();
 
         await Promise.all(asset.users.map(async (user) => {
-            if (user.address) {
-                await sendDefiProjectAvailableEmail(user, projects);
-            } else {
+            if (user.telegram_chat_id) {
                 await sendTelegramMessage('defi-project-available', user.telegram_chat_id, {
                     projects,
                 })

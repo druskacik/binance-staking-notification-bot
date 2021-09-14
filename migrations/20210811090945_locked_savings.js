@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = function (knex) {
     return Promise.all([
         knex.schema.createTable('asset_locked_savings', (table) => {
             table.increments('id').primary();
@@ -24,7 +24,6 @@ exports.up = function(knex) {
             table.boolean('sold_out');
 
             table.float('interest_rate', 38, 16);
-
         })
             .then(() => {
                 console.log('Table project_locked_savings was created.');
@@ -57,10 +56,10 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-    ])
+    ]);
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
     return Promise.all([
         knex.schema.alterTable('user', (table) => {
             table.dropColumn('subscribe_locked_savings');
@@ -92,5 +91,5 @@ exports.down = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-  ])
+    ]);
 };

@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = function (knex) {
     return Promise.all([
         knex.schema.createTable('availability_history_locked', (table) => {
             table.increments('id').primary();
@@ -20,10 +20,10 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-    ])
+    ]);
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
     return Promise.all([
         knex.schema.dropTable('availability_history_locked')
             .then(() => {
@@ -32,5 +32,5 @@ exports.down = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-  ])
+    ]);
 };

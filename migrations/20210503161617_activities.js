@@ -1,5 +1,5 @@
 
-exports.up = function(knex) {
+exports.up = function (knex) {
     return Promise.all([
         knex.schema.createTable('saving_activity', (table) => {
             table.increments('id').primary();
@@ -34,10 +34,10 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-    ])
+    ]);
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
     return Promise.all([
         knex.schema.alterTable('user', (table) => {
             table.dropColumn('subscribe_activities');
@@ -55,5 +55,5 @@ exports.down = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-  ])
+    ]);
 };

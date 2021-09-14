@@ -1,20 +1,20 @@
 <template>
-    <div class="telegram-button--main">
-        <a
-            class="telegram-button__button umami--click--telegram-button"
-            href="https://t.me/bstaking_bot"
-            target="_blank"
-        >
-            <img
-                src="../assets/telegram-logo.svg"
-                alt="Telegram Logo"
-                class="telegram-button__logo"
-            />
-            <div>
-                Chat with the bot
-            </div>
-        </a>
-    </div>
+  <div class="telegram-button--main">
+    <a
+      class="telegram-button__button umami--click--telegram-button"
+      href="https://t.me/bstaking_bot"
+      target="_blank"
+    >
+      <img
+        src="../assets/telegram-logo.svg"
+        alt="Telegram Logo"
+        class="telegram-button__logo"
+      >
+      <div>
+        Chat with the bot
+      </div>
+    </a>
+  </div>
 </template>
 
 <style scoped>

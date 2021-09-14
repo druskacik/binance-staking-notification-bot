@@ -14,7 +14,6 @@ const job = new CronJob({
             jobIsRunning = true;
             console.log('Running cronjob: ending user subscriptions ...');
             try {
-
                 let currentTime = dayjs();
                 currentTime = currentTime.format('YYYY-MM-DD HH:mm:ss');
 
@@ -25,23 +24,22 @@ const job = new CronJob({
                         .andWhere('subscription_end_date', '<', currentTime)
                         .whereNull('address'); // only rows of Telegram users, not email users
                 })
-                .fetchAll();
+                    .fetchAll();
 
                 const usersToEndSubscriptionJSON = usersToEndSubscription.toJSON();
                 await Promise.all(usersToEndSubscriptionJSON.map(async (user) => {
                     // send telegram message about subscription end
                     const chatID = user.telegram_chat_id;
                     await sendTelegramMessage('subscription-ended', chatID);
-                }))
+                }));
 
                 await Promise.all(usersToEndSubscription.map(async (userToEndSubscription) => {
                     await userToEndSubscription.save({
                         is_pro: 0,
                     });
                 }));
-    
+
                 console.log('Cron run successfully !');
-    
             } catch (err) {
                 console.log(err);
             } finally {
@@ -50,7 +48,7 @@ const job = new CronJob({
         } else {
             console.log('Job still running, aborting.');
         }
-  },
-})
+    },
+});
 
 job.start();

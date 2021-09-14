@@ -1,33 +1,32 @@
-const Mustache = require('mustache')
+const Mustache = require('mustache');
 
 const sendMail = require('../../index');
 
 const readFileAsync = require('../../../../utils/read-file-async');
 
 const sendNewDefiAssetAvailableEmail = async (user, asset) => {
-  try {
-    console.log(`Sending new-defi-asset email to ${user.address}`);
+    try {
+        console.log(`Sending new-defi-asset email to ${user.address}`);
 
-    const unsubscribeUrl = `${process.env.BASE_URL}/api/subscription/unsubscribe?token=${user.token}`;
+        const unsubscribeUrl = `${process.env.BASE_URL}/api/subscription/unsubscribe?token=${user.token}`;
 
-    const templateText = await readFileAsync(__dirname + '/template-text.mustache');
-    const text = Mustache.render(templateText, {
-        ...asset,
-        unsubscribeUrl,
-    });
+        const templateText = await readFileAsync(__dirname + '/template-text.mustache');
+        const text = Mustache.render(templateText, {
+            ...asset,
+            unsubscribeUrl,
+        });
 
-    const options = {
-      to: user.address,
-      subject: `New DeFi staking on Binance -  ${asset.name}`,
-      text,
+        const options = {
+            to: user.address,
+            subject: `New DeFi staking on Binance -  ${asset.name}`,
+            text,
+        };
+
+        const transporterID = user.id % 22;
+        await sendMail(options, transporterID);
+    } catch (err) {
+        console.log(err);
     }
-
-    const transporterID = user.id % 22;
-    await sendMail(options, transporterID);
-
-  } catch (err) {
-    console.log(err);
-  }
-}
+};
 
 module.exports = sendNewDefiAssetAvailableEmail;

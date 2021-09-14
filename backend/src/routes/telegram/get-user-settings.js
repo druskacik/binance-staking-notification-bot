@@ -4,8 +4,7 @@ const convertTimeToUTC = require('../../utils/convert-time-to-utc');
 
 const getUserSettings = async (chatID) => {
     try {
-
-        let user = await User.forge().where({
+        const user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch({
             withRelated: ['assetsLocked', 'assetsDefi', 'assetsLockedSavings'],
@@ -52,11 +51,10 @@ const getUserSettings = async (chatID) => {
             followsDefi,
             followsLockedSavings,
             followsNothing,
-        }
-
+        };
     } catch (err) {
         throw err;
     }
-}
+};
 
 module.exports = getUserSettings;

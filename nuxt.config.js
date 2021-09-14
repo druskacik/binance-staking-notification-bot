@@ -24,7 +24,7 @@ export default {
                 async: true,
                 defer: true,
             },
-        ]
+        ],
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -56,7 +56,7 @@ export default {
     // Build Configuration: https://go.nuxtjs.dev/config-build
     build: {
         // analyze: true,
-        extend(config, ctx) {
+        extend (config, ctx) {
             config.resolve.alias['@ant-design/icons/lib/dist$'] = path.resolve(__dirname, './antdv/icons.js');
             // config.resolve.alias['ant-design-vue/es/index.js'] = path.resolve(__dirname, './antdv/components.js');
         },

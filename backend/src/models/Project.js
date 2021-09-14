@@ -4,10 +4,10 @@ const bookshelf = require('bookshelf')(connection);
 const Project = bookshelf.Model.extend({
     tableName: 'project',
     idAttribute: 'id',
-    asset: function () {
+    asset () {
         const Asset = require('./Asset');
         return this.belongsTo(Asset);
-    }
+    },
 });
 
 module.exports = bookshelf.model('Project', Project);

@@ -12,12 +12,10 @@ const job = new CronJob({
             jobIsRunning = true;
             console.log('Running cronjob: fetching activities ...');
             try {
-
                 const activitiesData = await getActivitiesInfo();
                 await updateActivites(activitiesData);
-    
+
                 console.log('Cron run successfully !');
-    
             } catch (err) {
                 console.log(err);
             } finally {
@@ -26,7 +24,7 @@ const job = new CronJob({
         } else {
             console.log('Job still running, aborting.');
         }
-  },
-})
+    },
+});
 
 job.start();

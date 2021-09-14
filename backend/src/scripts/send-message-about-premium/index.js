@@ -6,7 +6,6 @@ const readFileAsync = require('../../utils/read-file-async');
 
 const sendBulkMessageAboutPremium = async () => {
     try {
-
         const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`;
 
         const telegramUsers = await knex('user')
@@ -18,7 +17,7 @@ const sendBulkMessageAboutPremium = async () => {
 
         const messageParams = {
             parse_mode: 'HTML',
-            text: text,
+            text,
             disable_web_page_preview: 1,
         };
 
@@ -33,13 +32,12 @@ const sendBulkMessageAboutPremium = async () => {
             } catch (err) {
                 console.log('ERROR, BOT WAS BLOCKED BY THE USER');
             }
-        }))
-
+        }));
     } catch (err) {
         console.log(err);
     } finally {
         process.exit();
     }
-}
+};
 
 sendBulkMessageAboutPremium();

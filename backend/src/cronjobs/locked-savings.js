@@ -12,12 +12,10 @@ const job = new CronJob({
             jobIsRunning = true;
             console.log('Running cronjob: fetching locked savings options ...');
             try {
-    
                 const data = await getLockedSavings();
                 await updateLockedSavingsInfo(data);
-    
+
                 console.log('Cron run successfully !');
-    
             } catch (err) {
                 console.log(err);
             } finally {
@@ -26,7 +24,7 @@ const job = new CronJob({
         } else {
             console.log('Job still running, aborting.');
         }
-  },
-})
+    },
+});
 
 job.start();

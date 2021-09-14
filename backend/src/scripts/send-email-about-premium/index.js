@@ -6,7 +6,6 @@ const sendMail = require('../../services/mailer');
 
 const sendBulkEmailAboutPremium = async () => {
     try {
-
         const usersWithEmail = await knex('user')
             .where({
                 active: 1,
@@ -28,22 +27,20 @@ const sendBulkEmailAboutPremium = async () => {
                     to: user.address,
                     subject: 'IMPORTANT: email support will be dropped in 7 days',
                     text,
-                  }
-              
+                };
+
                 const transporterID = user.id % 22;
                 await sendMail(options, transporterID);
-
             } catch (err) {
                 console.log(`ERROR WITH EMAIL ${user.address}`);
                 console.log(err);
             }
-        }))
-
+        }));
     } catch (err) {
         console.log(err);
     } finally {
         process.exit();
     }
-}
+};
 
 sendBulkEmailAboutPremium();

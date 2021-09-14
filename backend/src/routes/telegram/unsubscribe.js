@@ -3,7 +3,6 @@ const User = require('../../models/User');
 
 const unsubscribeAssets = async (chatID, assets) => {
     try {
-
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch();
@@ -16,15 +15,14 @@ const unsubscribeAssets = async (chatID, assets) => {
                 })
                 .update({
                     subscribe_new_assets: 0,
-                })
+                });
         }
 
         const dbAssets = await knex('asset')
-        .whereIn('asset_name', assets)
-        .select();
+            .whereIn('asset_name', assets)
+            .select();
 
         if (dbAssets.length > 0) {
-
             const dbAssetsIDs = dbAssets.map(asset => asset.id);
 
             await knex('user_asset_notification')
@@ -36,10 +34,9 @@ const unsubscribeAssets = async (chatID, assets) => {
         }
 
         return dbAssets.map(asset => asset.asset_name);
-        
     } catch (err) {
         throw err;
     }
-}
+};
 
 module.exports = unsubscribeAssets;

@@ -46,6 +46,7 @@
 <script>
 
 export default {
+    name: 'BlogPayments',
     head: {
         title: 'Why the bot is not for free',
         meta: [
@@ -61,7 +62,6 @@ export default {
             },
         ],
     },
-    name: 'BlogPayments',
 };
 </script>
 

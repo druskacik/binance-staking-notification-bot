@@ -1,7 +1,6 @@
 const dayjs = require('dayjs');
 
-exports.up = function(knex) {
-
+exports.up = function (knex) {
     const currentTimestamp = dayjs();
     // 8 days free trial for everyone from the moment of going live
     const duration = 8;
@@ -38,10 +37,10 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-    ])
+    ]);
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
     return Promise.all([
         knex.schema.dropTable('transaction')
             .then(() => {
@@ -51,14 +50,14 @@ exports.down = function(knex) {
                 console.log(err);
             }),
         knex.schema.alterTable('user', (table) => {
-                table.dropColumn('is_pro');
-                table.dropColumn('subscription_end_date');
-            })
+            table.dropColumn('is_pro');
+            table.dropColumn('subscription_end_date');
+        })
             .then(() => {
                 console.log('Columns is_pro, subscription_end_date were dropped from table user.');
             })
             .catch((err) => {
                 console.log(err);
             }),
-  ])
+    ]);
 };

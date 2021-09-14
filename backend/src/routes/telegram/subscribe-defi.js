@@ -3,7 +3,6 @@ const User = require('../../models/User');
 
 const subscribeDefiAssets = async (chatID, assets) => {
     try {
-
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch();
@@ -15,12 +14,12 @@ const subscribeDefiAssets = async (chatID, assets) => {
 
         if (assets.includes('NEW')) {
             await knex('user')
-				.where({
-					id: user.id,
-				})
-				.update({
-					subscribe_defi: 1,
-				})
+                .where({
+                    id: user.id,
+                })
+                .update({
+                    subscribe_defi: 1,
+                });
         }
 
         // delete if exist and then create again
@@ -28,10 +27,9 @@ const subscribeDefiAssets = async (chatID, assets) => {
         // TODO: make this better
 
         if (dbAssets.length > 0) {
-
             const dbAssetsIDs = dbAssets.map(asset => asset.id);
 
-            const subscribedAssets = dbAssetsIDs.map((assetID) => ({
+            const subscribedAssets = dbAssetsIDs.map(assetID => ({
                 user_id: user.id,
                 asset_defi_id: assetID,
             }));
@@ -42,17 +40,14 @@ const subscribeDefiAssets = async (chatID, assets) => {
                 })
                 .whereIn('asset_defi_id', dbAssetsIDs)
                 .del();
-    
-            await knex('user_defi_notification').insert(subscribedAssets);
 
+            await knex('user_defi_notification').insert(subscribedAssets);
         }
 
-        
         return dbAssets.map(asset => asset.asset_name);
-
     } catch (err) {
         throw err;
     }
-}
+};
 
 module.exports = subscribeDefiAssets;

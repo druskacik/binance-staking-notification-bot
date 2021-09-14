@@ -5,7 +5,6 @@ const sendNewActivityAvailableEmail = require('../../services/mailer/emails/new-
 
 const sendNewActivityAvailableNotifications = async (item) => {
     try {
-
         let users = await User.forge()
             .where({
                 subscribe_activities: 1,
@@ -21,13 +20,12 @@ const sendNewActivityAvailableNotifications = async (item) => {
             } else {
                 await sendTelegramMessage('new-activity-available', user.telegram_chat_id, {
                     item,
-                })
+                });
             }
         }));
-
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 module.exports = sendNewActivityAvailableNotifications;

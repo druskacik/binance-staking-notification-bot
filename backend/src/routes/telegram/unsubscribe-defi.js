@@ -3,7 +3,6 @@ const User = require('../../models/User');
 
 const unsubscribeDefiAssets = async (chatID, assets) => {
     try {
-
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch();
@@ -16,7 +15,7 @@ const unsubscribeDefiAssets = async (chatID, assets) => {
                 })
                 .update({
                     subscribe_defi: 0,
-                })
+                });
         }
 
         const dbAssets = await knex('asset_defi')
@@ -24,7 +23,6 @@ const unsubscribeDefiAssets = async (chatID, assets) => {
             .select();
 
         if (dbAssets.length > 0) {
-
             const dbAssetsIDs = dbAssets.map(asset => asset.id);
 
             await knex('user_defi_notification')
@@ -36,10 +34,9 @@ const unsubscribeDefiAssets = async (chatID, assets) => {
         }
 
         return dbAssets.map(asset => asset.asset_name);
-        
     } catch (err) {
         throw err;
     }
-}
+};
 
 module.exports = unsubscribeDefiAssets;

@@ -38,7 +38,7 @@
           and follow his instructions.
         </p>
         <div>
-            <telegram-button />
+          <telegram-button />
         </div>
         <h1 class="description__content__header">
           Historical Data

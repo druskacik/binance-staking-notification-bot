@@ -13,12 +13,10 @@ const job = new CronJob({
             jobIsRunning = true;
             console.log('Running cronjob: logging defi history ...');
             try {
-
                 const defiData = await getDefiStakingInfo();
                 await logDefiHistory(defiData);
-    
+
                 console.log('Cron run successfully !');
-    
             } catch (err) {
                 console.log(err);
             } finally {
@@ -27,7 +25,7 @@ const job = new CronJob({
         } else {
             console.log('Job still running, aborting.');
         }
-  },
-})
+    },
+});
 
 job.start();

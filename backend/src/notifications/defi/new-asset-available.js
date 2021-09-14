@@ -4,7 +4,6 @@ const sendTelegramMessage = require('../../services/telegram-bot');
 
 const sendNewDefiAssetAvailableNotifications = async (asset) => {
     try {
-
         let users = await User.forge()
             .where({
                 subscribe_defi: 1,
@@ -20,13 +19,12 @@ const sendNewDefiAssetAvailableNotifications = async (asset) => {
             } else {
                 await sendTelegramMessage('new-defi-asset-available', user.telegram_chat_id, {
                     asset,
-                })
+                });
             }
         }));
-
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 module.exports = sendNewDefiAssetAvailableNotifications;

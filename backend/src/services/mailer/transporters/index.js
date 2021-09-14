@@ -244,6 +244,6 @@ const transporters = {
     }, {
         from: process.env.MAIL_USER_22,
     }),
-}
+};
 
 module.exports = transporters;

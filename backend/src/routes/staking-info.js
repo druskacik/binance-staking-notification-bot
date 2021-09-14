@@ -8,7 +8,6 @@ const router = express.Router();
 router.route('/')
     .get(async (req, res) => {
         try {
-
             let assetsLocked = await Asset.fetchAll();
             assetsLocked = assetsLocked.toJSON();
 
@@ -26,9 +25,8 @@ router.route('/')
                 .json({
                     status: err.status || 500,
                     message: err.message,
-                })
-            }
-    })
-
+                });
+        }
+    });
 
 module.exports = router;

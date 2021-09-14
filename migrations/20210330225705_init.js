@@ -1,6 +1,5 @@
 
-exports.up = function(knex) {
-
+exports.up = function (knex) {
     return Promise.all([
         knex.schema.createTable('asset', (table) => {
             table.increments('id').primary();
@@ -31,7 +30,6 @@ exports.up = function(knex) {
 
             table.float('min_purchase_amount', 38, 4);
             table.float('max_purchase_amount', 38, 4);
-
         })
             .then(() => {
                 console.log('Table project was created.');
@@ -83,12 +81,11 @@ exports.up = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-    ])
-  
+    ]);
 };
 
-exports.down = function(knex) {
-  return Promise.all([
+exports.down = function (knex) {
+    return Promise.all([
         knex.schema.dropTable('subscription_request')
             .then(() => {
                 console.log('Table subscription_request was deleted.');
@@ -124,5 +121,5 @@ exports.down = function(knex) {
             .catch((err) => {
                 console.log(err);
             }),
-  ])
+    ]);
 };

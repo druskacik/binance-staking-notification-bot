@@ -5,9 +5,7 @@ const sendTelegramInvoice = async (chatID, {
     subscriptionType,
     previousMessageID,
 }) => {
-
     try {
-
         const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendInvoice`;
         const urlToDeleteMessage = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/deleteMessage`;
 
@@ -16,29 +14,28 @@ const sendTelegramInvoice = async (chatID, {
         let amount;
 
         switch (subscriptionType) {
-            case '1WEEK':
-                text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
-                priceLabel = 'SUBSCRIPTION 7 DAYS';
-                amount = 200;
-                break;
+        case '1WEEK':
+            text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
+            priceLabel = 'SUBSCRIPTION 7 DAYS';
+            amount = 200;
+            break;
 
-            case '4WEEK':
-                text = 'Binance Staking Notification Bot subscription for 4 weeks. Purchasing this service will give you full access to all the bot features for the given period.';
-                priceLabel = 'SUBSCRIPTION 4 WEEKS';
-                amount = 500;
-                break;
+        case '4WEEK':
+            text = 'Binance Staking Notification Bot subscription for 4 weeks. Purchasing this service will give you full access to all the bot features for the given period.';
+            priceLabel = 'SUBSCRIPTION 4 WEEKS';
+            amount = 500;
+            break;
 
-            case '1YEAR':
-                text = 'Binance Staking Notification Bot subscription for 1 year. Purchasing this service will give you full access to all the bot features for the given period.';
-                priceLabel = 'SUBSCRIPTION 1 YEAR';
-                amount = 3000;
-                break;
-                
-            
-            default:
-                text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
-                priceLabel = 'SUBSCRIPTION 7 DAYS';
-                amount = 200;
+        case '1YEAR':
+            text = 'Binance Staking Notification Bot subscription for 1 year. Purchasing this service will give you full access to all the bot features for the given period.';
+            priceLabel = 'SUBSCRIPTION 1 YEAR';
+            amount = 3000;
+            break;
+
+        default:
+            text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
+            priceLabel = 'SUBSCRIPTION 7 DAYS';
+            amount = 200;
         }
 
         // to incorporate or not to incorporate ?
@@ -46,7 +43,7 @@ const sendTelegramInvoice = async (chatID, {
             params: {
                 chat_id: chatID,
                 message_id: previousMessageID,
-            }
+            },
         });
 
         const randomHash = randomstring.generate({
@@ -67,7 +64,7 @@ const sendTelegramInvoice = async (chatID, {
                 prices: JSON.stringify([
                     {
                         label: priceLabel,
-                        amount: amount,
+                        amount,
                     },
                 ]),
                 start_parameter: startParameter,
@@ -75,17 +72,13 @@ const sendTelegramInvoice = async (chatID, {
         });
 
         return response;
-
     } catch (err) {
         console.log(err);
     }
-
-}
+};
 
 const sendTelegramCheckoutSuccess = async (preCheckoutQueryID) => {
-
     try {
-
         const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/answerPreCheckoutQuery`;
 
         const response = await axios.get(url, {
@@ -96,37 +89,31 @@ const sendTelegramCheckoutSuccess = async (preCheckoutQueryID) => {
         });
 
         return response;
-
     } catch (err) {
         console.log(err);
     }
-
-}
+};
 
 const sendTelegramCheckoutError = async (preCheckoutQueryID) => {
-
     try {
-
         const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/answerPreCheckoutQuery`;
 
         const response = await axios.get(url, {
             params: {
                 pre_checkout_query_id: preCheckoutQueryID,
                 ok: false,
-                error_message: 'There was an error with processing your transaction. Please try again later or contact support.'
+                error_message: 'There was an error with processing your transaction. Please try again later or contact support.',
             },
         });
 
         return response;
-
     } catch (err) {
         console.log(err);
     }
-
-}
+};
 
 module.exports = {
     sendTelegramInvoice,
     sendTelegramCheckoutSuccess,
     sendTelegramCheckoutError,
-}
+};

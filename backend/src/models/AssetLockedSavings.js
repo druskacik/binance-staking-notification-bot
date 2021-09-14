@@ -4,15 +4,15 @@ const bookshelf = require('bookshelf')(connection);
 const AssetLockedSavings = bookshelf.Model.extend({
     tableName: 'asset_locked_savings',
     idAttribute: 'id',
-    projects: function () {
+    projects () {
         const ProjectLockedSavings = require('./ProjectLockedSavings');
         return this.hasMany(ProjectLockedSavings);
     },
-    users: function () {
+    users () {
         const User = require('./User');
         const UserLockedSavingsNotification = require('./UserLockedSavingsNotification');
         return this.belongsToMany(User).through(UserLockedSavingsNotification);
-    }
+    },
 });
 
 module.exports = bookshelf.model('AssetLockedSavings', AssetLockedSavings);

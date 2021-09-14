@@ -50,6 +50,12 @@ router.route('/options')
                 asset.durations = durations.sort((a, b) => b - a);
             }));
 
+            assetsLockedSavings.sort((a, b) => {
+                if (a.asset_name < b.asset_name) { return -1; }
+                if (a.asset_name > b.asset_name) { return 1; }
+                return 0;
+            });
+
             res.status(200)
                 .json({
                     optionsLocked: assets,

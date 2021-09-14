@@ -8,6 +8,7 @@
         <history-form
           :options-locked="optionsLocked"
           :options-defi="optionsDefi"
+          :options-locked-savings="optionsLockedSavings"
         />
       </div>
     </div>
@@ -17,6 +18,14 @@
 <script>
 
 export default {
+    async asyncData ({ $axios, $config }) {
+        const response = await $axios.$get(`${$config.baseUrl}/api/history/options`);
+        return {
+            optionsLocked: response.optionsLocked,
+            optionsDefi: response.optionsDefi,
+            optionsLockedSavings: response.optionsLockedSavings,
+        };
+    },
     head: {
         title: 'Binance Staking - historical data',
         meta: [
@@ -31,13 +40,6 @@ export default {
                 content: 'Binance, cryptocurrency staking, history, export, historical data',
             },
         ],
-    },
-    async asyncData ({ $axios, $config }) {
-        const response = await $axios.$get(`${$config.baseUrl}/api/history/options`);
-        return {
-            optionsLocked: response.optionsLocked,
-            optionsDefi: response.optionsDefi,
-        };
     },
 };
 </script>

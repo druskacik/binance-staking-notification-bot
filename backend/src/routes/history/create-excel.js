@@ -1,25 +1,24 @@
 const ExcelJS = require('exceljs');
 
-const createExcelLocked = (assetName, duration, dbData) => {
+const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
     const workBook = new ExcelJS.Workbook();
-    const sheet = workBook.addWorksheet(`${assetName} ${duration} locked`);
+    const sheet = workBook.addWorksheet(`${assetName} ${duration} ${stakingType}`);
 
     sheet.columns = [
-        { header: 'timestamp (UTC)', key: 'timestamp', width: 32, style: { numFmt: 'dd/mm/yyyy hh:mm:ss' } },
+        { header: 'timestamp (UTC)', key: 'timestamp', width: 24, style: { numFmt: 'dd/mm/yyyy hh:mm:ss' } },
         { header: 'became_sold_out', key: 'became_sold_out', width: 16 },
     ];
 
     // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
-    const rows = dbData.map((row) => ([
-        new Date(row['created_at'] - 2*60*60*1000),
-        row['became_sold_out'],
+    const rows = dbData.map(row => ([
+        new Date(row.created_at - 2 * 60 * 60 * 1000),
+        row.became_sold_out,
     ]));
 
     sheet.addRows(rows);
 
     return workBook;
-
-}
+};
 
 const createExcelDefi = (assetName, dbData) => {
     const workBook = new ExcelJS.Workbook();
@@ -32,19 +31,18 @@ const createExcelDefi = (assetName, dbData) => {
     ];
 
     // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
-    const rows = dbData.map((row) => ([
-        new Date(row['created_at'] - 2*60*60*1000),
-        row['left_available'],
-        row['sold_out'],
+    const rows = dbData.map(row => ([
+        new Date(row.created_at - 2 * 60 * 60 * 1000),
+        row.left_available,
+        row.sold_out,
     ]));
 
     sheet.addRows(rows);
 
     return workBook;
-
-}
+};
 
 module.exports = {
-    createExcelLocked,
+    createExcel,
     createExcelDefi,
-}
+};

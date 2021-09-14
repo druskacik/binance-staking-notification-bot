@@ -14,10 +14,13 @@
         @change="clearForm"
       >
         <a-radio-button value="locked">
-          Locked staking
+          Locked Staking
         </a-radio-button>
         <a-radio-button value="defi">
-          DeFi staking
+          DeFi Staking
+        </a-radio-button>
+        <a-radio-button value="locked-savings">
+          Locked Savings
         </a-radio-button>
       </a-radio-group>
     </div>
@@ -80,7 +83,7 @@
           </a-radio-group>
         </div>
       </div>
-      <div v-else>
+      <div v-else-if="selectedStakingType === 'defi'">
         <div class="history-form__field">
           <div>
             Currency:
@@ -100,6 +103,64 @@
               {{ option.asset_name }}
             </a-select-option>
           </a-select>
+        </div>
+        <div class="history-form__field">
+          <div>
+            Number of days:
+          </div>
+          <a-radio-group
+            v-model="selectedNumDays"
+            class="history-form__radio-group"
+          >
+            <a-radio
+              v-for="numDaysOption in numDaysOptions"
+              :key="numDaysOption.label"
+              :value="numDaysOption.value"
+              class="history-form__radio-group__box"
+            >
+              {{ numDaysOption.label }}
+            </a-radio>
+          </a-radio-group>
+        </div>
+      </div>
+      <div v-else>
+        <div class="history-form__field">
+          <div>
+            Currency:
+          </div>
+          <a-select
+            id="selectLocked"
+            v-model="selectedAsset"
+            placeholder="Select a currency"
+            class="history-form__select"
+            @change="currencySelectChange"
+          >
+            <a-select-option
+              v-for="option in optionsLockedSavings"
+              :key="option.id"
+              :value="JSON.stringify(option)"
+            >
+              {{ option.asset_name }}
+            </a-select-option>
+          </a-select>
+        </div>
+        <div class="history-form__field history-form__field--radio">
+          <div>
+            Duration:
+          </div>
+          <a-radio-group
+            v-model="selectedDuration"
+            class="history-form__radio-group"
+          >
+            <a-radio
+              v-for="duration in durationsLocked"
+              :key="duration"
+              :value="duration"
+              class="history-form__radio-group__box"
+            >
+              {{ duration }}
+            </a-radio>
+          </a-radio-group>
         </div>
         <div class="history-form__field">
           <div>
@@ -154,6 +215,12 @@ export default {
                 return [];
             },
         },
+        optionsLockedSavings: {
+            type: Array,
+            default () {
+                return [];
+            },
+        },
     },
     data () {
         return {
@@ -185,7 +252,7 @@ export default {
                 this.warning('Please select a currency !');
                 return;
             }
-            if (this.selectedStakingType === 'locked' && !this.selectedDuration) {
+            if (this.selectedStakingType !== 'defi' && !this.selectedDuration) {
                 this.warning('Please select a staking duration to export !');
                 return;
             }

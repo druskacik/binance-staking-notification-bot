@@ -1,18 +1,18 @@
 <template>
-  <div class="home">
-    <div class="home__description-and-form">
-      <div class="home__description-and-form__element">
-        <history-description />
-      </div>
-      <div class="home__description-and-form__element">
-        <history-form
-          :options-locked="optionsLocked"
-          :options-defi="optionsDefi"
-          :options-locked-savings="optionsLockedSavings"
-        />
-      </div>
+    <div class="home">
+        <div class="home__description-and-form">
+            <div class="home__description-and-form__element">
+                <history-description />
+            </div>
+            <div class="home__description-and-form__element">
+                <history-form
+                    :options-locked="optionsLocked"
+                    :options-defi="optionsDefi"
+                    :options-locked-savings="optionsLockedSavings"
+                />
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>

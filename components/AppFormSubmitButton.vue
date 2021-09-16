@@ -1,22 +1,22 @@
 <template>
-  <div class="app-form__submit-section">
-    <a-button
-      type="primary"
-      class="app-form__submit-button"
-      :loading="loading"
-      @click="onClick"
-    >
-      <span class="app-form__submit-button__text">
-        {{ text }}
-      </span>
-    </a-button>
-    <div
-      v-if="showSign"
-      class="app-form__submit-section--text"
-    >
-      It's free !
+    <div class="app-form__submit-section">
+        <a-button
+            type="primary"
+            class="app-form__submit-button"
+            :loading="loading"
+            @click="onClick"
+        >
+            <span class="app-form__submit-button__text">
+                {{ text }}
+            </span>
+        </a-button>
+        <div
+            v-if="showSign"
+            class="app-form__submit-section--text"
+        >
+            It's free !
+        </div>
     </div>
-  </div>
 </template>
 
 <script>

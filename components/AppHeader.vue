@@ -1,11 +1,11 @@
 <template>
-  <div class="app-header">
-    <div class="logo">
-      <NuxtLink to="/" style="text-decoration: none; color: inherit;">
-        BinanceStaking<span class="app-header__logo--black">Watcher</span>
-      </NuxtLink>
+    <div class="app-header">
+        <div class="logo">
+            <NuxtLink to="/" style="text-decoration: none; color: inherit;">
+                BinanceStaking<span class="app-header__logo--black">Watcher</span>
+            </NuxtLink>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

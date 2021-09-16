@@ -1,9 +1,9 @@
 <template>
-  <div class="app-footer">
-    <div>
-      Contact: https://t.me/rdruska
+    <div class="app-footer">
+        <div>
+            Contact: https://t.me/rdruska
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

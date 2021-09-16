@@ -1,14 +1,14 @@
 <template>
-  <div class="home">
-    <div class="home__description-and-form">
-      <div class="home__description-and-form__element">
-        <app-description />
-      </div>
-      <div class="home__description-and-form__element">
-        <app-form />
-      </div>
+    <div class="home">
+        <div class="home__description-and-form">
+            <div class="home__description-and-form__element">
+                <app-description />
+            </div>
+            <div class="home__description-and-form__element">
+                <app-form />
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>

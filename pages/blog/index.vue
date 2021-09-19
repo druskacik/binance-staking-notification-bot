@@ -3,7 +3,7 @@
         <div class="blog__list">
             <div class="blog__list__element">
                 <div>09 August 2021</div>
-                <NuxtLink to="/why-the-bot-is-not-for-free-anymore">
+                <NuxtLink to="/blog/why-the-bot-is-not-for-free-anymore">
                     Why the bot is not for free anymore
                 </NuxtLink>
             </div>

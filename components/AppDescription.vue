@@ -60,7 +60,7 @@
                     After 4 months of offering the bot for free to everyone it became clear that this kind of solution is unfeasible.
                     From August 2021, outside of 7 day free trial, subscription is needed to use the bot.
                     You can read the full explanation
-                    <NuxtLink to="/why-the-bot-is-not-for-free-anymore">
+                    <NuxtLink to="/blog/why-the-bot-is-not-for-free-anymore">
                         in this blog
                     </NuxtLink>.
                 </p>

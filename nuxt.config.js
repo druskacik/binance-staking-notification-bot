@@ -61,15 +61,17 @@ export default {
             // config.resolve.alias['ant-design-vue/es/index.js'] = path.resolve(__dirname, './antdv/components.js');
         },
     },
-    buildDir: 'dist',
     serverMiddleware: [
         redirectSSL.create({
             enabled: process.env.NODE_ENV === 'production',
         }),
         { path: '/api', handler: '~/backend/index.js' },
+        '~/server-middleware/redirects',
     ],
     server: {
         port: process.env.PORT || 3000,
+        // for mobile testing
+        // host: '0.0.0.0',
     },
     publicRuntimeConfig: {
         baseUrl: process.env.BASE_URL || 'https://bswatcher.com',

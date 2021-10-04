@@ -48,7 +48,7 @@
             <p>
                 VeChain (VET) is the 6th most followed currency despite being only 27th asset by market cap and having maximum APY of just 5.47 %, much less than some of its competitors.
                 Harmony (ONE) and Oasis Network (ROSE) seem to overperform as well, however, their staking interests are over 20 % and belong among the higher APYs offered on Binance.
-                1INCH is another interesting outlier, with just 6.7 % APY and a half billion market cap it acquired more followers than e.g. Filecoin (FIL), one of the top-tier cryptocurrencies.
+                1INCH is another interesting outlier, with just 6.7 % APY and a half billion market cap it acquired similar number of followers than e.g. Filecoin (FIL), one of the top-tier cryptocurrencies.
             </p>
             <p>
                 AdEx Network (ADX) seems to be the biggest outlier on the list, however its high rank can be probably explained by the unusually high APY (46.70 %) and the fact that on Binance it’s possible to stake it only for 30 days, unlike the other currencies that can be staked usually for 30, 60 and 90 days

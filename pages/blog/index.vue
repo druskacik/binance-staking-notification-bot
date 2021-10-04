@@ -2,6 +2,12 @@
     <div class="blog--main">
         <div class="blog__list">
             <div class="blog__list__element">
+                <div>05 October 2021</div>
+                <NuxtLink to="/blog/which-cryptocurrencies-have-the-most-dedicated-holders">
+                    Which cryptocurrencies have the most dedicated holders
+                </NuxtLink>
+            </div>
+            <div class="blog__list__element">
                 <div>09 August 2021</div>
                 <NuxtLink to="/blog/why-the-bot-is-not-for-free-anymore">
                     Why the bot is not for free anymore
@@ -42,6 +48,10 @@ export default {
 .blog__list {
     margin: 2rem 0 0 5rem;
     text-align: left;
+}
+
+.blog__list__element {
+    margin-bottom: 2rem;
 }
 
 @media screen and (max-width: 600px) {

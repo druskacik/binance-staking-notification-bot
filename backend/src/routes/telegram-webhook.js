@@ -310,6 +310,10 @@ router.route('/')
                 await sendTelegramMessage('terms', chatID);
                 break;
 
+            case '/faq':
+                await sendTelegramMessage('faq', chatID);
+                break;
+
             default:
                 await sendTelegramMessage('unknown-command', chatID, {});
             }

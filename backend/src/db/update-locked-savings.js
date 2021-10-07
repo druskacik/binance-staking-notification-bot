@@ -117,7 +117,11 @@ const updateLockedSavingsProjects = async (projects, assetID) => {
 
 // TODO: not sure if this is completely correct
 const projectIsSoldOut = (project) => {
-    if (project.status === 'PURCHASED') {
+    // if (project.status === 'PURCHASED') {
+    //     return true;
+    // }
+    // temporary hotfix
+    if (project.status !== 'PURCHASING') {
         return true;
     }
     return Number(project.lotsPurchased) + Number(project.lotsLowLimit) > Number(project.lotsUpLimit);

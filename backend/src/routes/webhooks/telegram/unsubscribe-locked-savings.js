@@ -1,16 +1,12 @@
-const knex = require('../../../connection');
-const User = require('../../models/User');
+const knex = require('../../../../connection');
+const User = require('../../../models/User');
 
-const subscribeLockedSavingsAssets = async (chatID, assets) => {
+const unsubscribeLockedSavingsAssets = async (chatID, assets) => {
     try {
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch();
         user = user.toJSON();
-
-        const dbAssets = await knex('asset_locked_savings')
-            .whereIn('asset_name', assets)
-            .select();
 
         if (assets.includes('NEW')) {
             await knex('user')
@@ -18,21 +14,16 @@ const subscribeLockedSavingsAssets = async (chatID, assets) => {
                     id: user.id,
                 })
                 .update({
-                    subscribe_locked_savings: 1,
+                    subscribe_locked_savings: 0,
                 });
         }
 
-        // delete if exist and then create again
-        // not very clever, but fast
-        // TODO: make this better
+        const dbAssets = await knex('asset_locked_savings')
+            .whereIn('asset_name', assets)
+            .select();
 
         if (dbAssets.length > 0) {
             const dbAssetsIDs = dbAssets.map(asset => asset.id);
-
-            const subscribedAssets = dbAssetsIDs.map(assetID => ({
-                user_id: user.id,
-                asset_locked_saving_id: assetID,
-            }));
 
             await knex('user_locked_savings_notification')
                 .where({
@@ -40,8 +31,6 @@ const subscribeLockedSavingsAssets = async (chatID, assets) => {
                 })
                 .whereIn('asset_locked_saving_id', dbAssetsIDs)
                 .del();
-
-            await knex('user_locked_savings_notification').insert(subscribedAssets);
         }
 
         return dbAssets.map(asset => asset.asset_name);
@@ -50,4 +39,4 @@ const subscribeLockedSavingsAssets = async (chatID, assets) => {
     }
 };
 
-module.exports = subscribeLockedSavingsAssets;
+module.exports = unsubscribeLockedSavingsAssets;

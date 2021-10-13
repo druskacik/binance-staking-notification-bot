@@ -1,6 +1,6 @@
-const User = require('../../models/User');
+const User = require('../../../models/User');
 
-const convertTimeToUTC = require('../../utils/convert-time-to-utc');
+const convertTimeToUTC = require('../../../utils/convert-time-to-utc');
 
 const getUserSettings = async (chatID) => {
     try {

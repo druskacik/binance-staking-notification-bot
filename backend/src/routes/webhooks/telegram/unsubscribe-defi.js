@@ -1,5 +1,5 @@
-const knex = require('../../../connection');
-const User = require('../../models/User');
+const knex = require('../../../../connection');
+const User = require('../../../models/User');
 
 const unsubscribeDefiAssets = async (chatID, assets) => {
     try {

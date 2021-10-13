@@ -1,14 +1,14 @@
-const knex = require('../../../connection');
-const User = require('../../models/User');
+const knex = require('../../../../connection');
+const User = require('../../../models/User');
 
-const subscribeDefiAssets = async (chatID, assets) => {
+const subscribeLockedSavingsAssets = async (chatID, assets) => {
     try {
         let user = await User.forge().where({
             telegram_chat_id: chatID,
         }).fetch();
         user = user.toJSON();
 
-        const dbAssets = await knex('asset_defi')
+        const dbAssets = await knex('asset_locked_savings')
             .whereIn('asset_name', assets)
             .select();
 
@@ -18,7 +18,7 @@ const subscribeDefiAssets = async (chatID, assets) => {
                     id: user.id,
                 })
                 .update({
-                    subscribe_defi: 1,
+                    subscribe_locked_savings: 1,
                 });
         }
 
@@ -31,17 +31,17 @@ const subscribeDefiAssets = async (chatID, assets) => {
 
             const subscribedAssets = dbAssetsIDs.map(assetID => ({
                 user_id: user.id,
-                asset_defi_id: assetID,
+                asset_locked_saving_id: assetID,
             }));
 
-            await knex('user_defi_notification')
+            await knex('user_locked_savings_notification')
                 .where({
                     user_id: user.id,
                 })
-                .whereIn('asset_defi_id', dbAssetsIDs)
+                .whereIn('asset_locked_saving_id', dbAssetsIDs)
                 .del();
 
-            await knex('user_defi_notification').insert(subscribedAssets);
+            await knex('user_locked_savings_notification').insert(subscribedAssets);
         }
 
         return dbAssets.map(asset => asset.asset_name);
@@ -50,4 +50,4 @@ const subscribeDefiAssets = async (chatID, assets) => {
     }
 };
 
-module.exports = subscribeDefiAssets;
+module.exports = subscribeLockedSavingsAssets;

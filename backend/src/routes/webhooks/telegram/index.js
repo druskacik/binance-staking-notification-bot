@@ -1,26 +1,26 @@
 const express = require('express');
 const dayjs = require('dayjs');
 
-const User = require('../models/User');
-const Asset = require('../models/Asset');
-const AssetDefi = require('../models/AssetDefi');
-const AssetLockedSavings = require('../models/AssetLockedSavings');
+const User = require('../../../models/User');
+const Asset = require('../../../models/Asset');
+const AssetDefi = require('../../../models/AssetDefi');
+const AssetLockedSavings = require('../../../models/AssetLockedSavings');
 
-const knex = require('../../connection');
+const knex = require('../../../../connection');
 
-const sendTelegramMessage = require('../services/telegram-bot');
-const telegramPaymentsHandler = require('../services/telegram-bot/payments');
-const convertTimeToUTC = require('../utils/convert-time-to-utc');
-const telegramTracker = require('../utils/telegram-tracker');
-const subscribeNewAssets = require('./telegram/subscribe');
-const unsubscribeAssets = require('./telegram/unsubscribe');
-const subscribeDefiAssets = require('./telegram/subscribe-defi');
-const unsubscribeDefiAssets = require('./telegram/unsubscribe-defi');
-const subscribeLockedSavingsAssets = require('./telegram/subscribe-locked-savings');
-const unsubscribeLockedSavingsAssets = require('./telegram/unsubscribe-locked-savings');
-const handleTransaction = require('./telegram/handle-payments');
+const sendTelegramMessage = require('../../../services/telegram-bot');
+const telegramPaymentsHandler = require('../../../services/telegram-bot/payments');
+const convertTimeToUTC = require('../../../utils/convert-time-to-utc');
+const telegramTracker = require('../../../utils/telegram-tracker');
 
-const getUserSettings = require('./telegram/get-user-settings');
+const subscribeNewAssets = require('./subscribe');
+const unsubscribeAssets = require('./unsubscribe');
+const subscribeDefiAssets = require('./subscribe-defi');
+const unsubscribeDefiAssets = require('./unsubscribe-defi');
+const subscribeLockedSavingsAssets = require('./subscribe-locked-savings');
+const unsubscribeLockedSavingsAssets = require('./unsubscribe-locked-savings');
+const handleTransaction = require('./handle-payments');
+const getUserSettings = require('./get-user-settings');
 
 const router = express.Router();
 

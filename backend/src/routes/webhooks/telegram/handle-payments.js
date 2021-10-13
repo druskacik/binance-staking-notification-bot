@@ -1,8 +1,8 @@
 const dayjs = require('dayjs');
 
-const knex = require('../../../connection');
+const knex = require('../../../../connection');
 
-const User = require('../../models/User');
+const User = require('../../../models/User');
 
 const handleTransaction = async (message) => {
     const chatID = message.chat.id;

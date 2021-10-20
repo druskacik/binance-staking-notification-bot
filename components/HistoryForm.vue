@@ -239,9 +239,15 @@ export default {
                     value: 14,
                 },
                 {
-                    label: 'all',
-                    value: null,
+                    label: 30,
+                    value: 30,
                 },
+                // this was causing error due to export being too big for DeFi staking
+                // TODO: make distinction according to staking type to export
+                // {
+                //     label: 'all',
+                //     value: null,
+                // },
             ],
             loading: false,
         };

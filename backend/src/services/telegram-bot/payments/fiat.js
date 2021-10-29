@@ -14,28 +14,28 @@ const sendTelegramInvoice = async (chatID, {
         let amount;
 
         switch (subscriptionType) {
-        case '1WEEK':
-            text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
-            priceLabel = 'SUBSCRIPTION 7 DAYS';
-            amount = 200;
-            break;
+            case '1WEEK':
+                text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
+                priceLabel = 'SUBSCRIPTION 7 DAYS';
+                amount = 200;
+                break;
 
-        case '4WEEK':
-            text = 'Binance Staking Notification Bot subscription for 4 weeks. Purchasing this service will give you full access to all the bot features for the given period.';
-            priceLabel = 'SUBSCRIPTION 4 WEEKS';
-            amount = 500;
-            break;
+            case '4WEEK':
+                text = 'Binance Staking Notification Bot subscription for 4 weeks. Purchasing this service will give you full access to all the bot features for the given period.';
+                priceLabel = 'SUBSCRIPTION 4 WEEKS';
+                amount = 500;
+                break;
 
-        case '1YEAR':
-            text = 'Binance Staking Notification Bot subscription for 1 year. Purchasing this service will give you full access to all the bot features for the given period.';
-            priceLabel = 'SUBSCRIPTION 1 YEAR';
-            amount = 3000;
-            break;
+            case '1YEAR':
+                text = 'Binance Staking Notification Bot subscription for 1 year. Purchasing this service will give you full access to all the bot features for the given period.';
+                priceLabel = 'SUBSCRIPTION 1 YEAR';
+                amount = 3000;
+                break;
 
-        default:
-            text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
-            priceLabel = 'SUBSCRIPTION 7 DAYS';
-            amount = 200;
+            default:
+                text = 'Binance Staking Notification Bot subscription for 7 days. Purchasing this service will give you full access to all the bot features for the given period.';
+                priceLabel = 'SUBSCRIPTION 7 DAYS';
+                amount = 200;
         }
 
         // to incorporate or not to incorporate ?

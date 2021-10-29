@@ -124,28 +124,73 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             text = Mustache.render(templateText, {
                 ...data,
             });
-            replyMarkup = {
-                inline_keyboard: [
-                    [{
-                        text: 'SUBSCRIPTION 1 WEEK (2€)',
-                        callback_data: '1WEEK',
-                    }],
-                    [{
-                        text: 'SUBSCRIPTION 4 WEEKS (5€)',
-                        callback_data: '4WEEK',
-                    }],
-                    [{
-                        text: 'SUBSCRIPTION 1 YEAR (30€)',
-                        callback_data: '1YEAR',
-                    }],
-                ],
-            };
+            if (chatID == process.env.ADMIN_TELEGRAM_CHAT_ID) {
+                replyMarkup = {
+                    inline_keyboard: [
+                        [{
+                            text: 'SUBSCRIPTION 1 WEEK (2€)',
+                            callback_data: '1WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 4 WEEKS (5€)',
+                            callback_data: '4WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 1 YEAR (30€)',
+                            callback_data: '1YEAR',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 1 YEAR (15€ IN BTC)',
+                            callback_data: '1YEAR_BTC',
+                        }],
+                    ],
+                };
+            } else {
+                replyMarkup = {
+                    inline_keyboard: [
+                        [{
+                            text: 'SUBSCRIPTION 1 WEEK (2€)',
+                            callback_data: '1WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 4 WEEKS (5€)',
+                            callback_data: '4WEEK',
+                        }],
+                        [{
+                            text: 'SUBSCRIPTION 1 YEAR (30€)',
+                            callback_data: '1YEAR',
+                        }],
+                    ],
+                };
+            }
             break;
 
         case 'successful-payment':
             templateText = await readFileAsync(__dirname + '/messages/successful-payment.mustache');
             text = Mustache.render(templateText, {
                 subscriptionEndDate: data.subscriptionEndDate,
+            });
+            break;
+
+        case 'crypto-invoice':
+            templateText = await readFileAsync(__dirname + '/messages/crypto-invoice.mustache');
+            text = Mustache.render(templateText, {
+                ...data,
+            });
+            break;
+
+        case 'crypto-payment-success':
+            templateText = await readFileAsync(__dirname + '/messages/crypto-payment-success.mustache');
+            text = Mustache.render(templateText, {
+                subscriptionEndDate: data.subscriptionEndDate,
+            });
+            break;
+
+        
+        case 'crypto-payment-partial':
+            templateText = await readFileAsync(__dirname + '/messages/crypto-payment-partial.mustache');
+            text = Mustache.render(templateText, {
+                ...data
             });
             break;
 

@@ -52,10 +52,21 @@ router.route('/')
                 const callbackQuery = req.body.callback_query;
                 const chatID = callbackQuery.from.id;
                 await telegramTracker.saveTelegramButtonClick(chatID, callbackQuery.data);
-                await telegramPaymentsHandler.sendTelegramInvoice(chatID, {
-                    subscriptionType: callbackQuery.data,
-                    previousMessageID: callbackQuery.message.message_id,
-                });
+
+                const subscriptionType = callbackQuery.data;
+                const isCryptoPayment = subscriptionType.endsWith('BTC');
+
+                if (!isCryptoPayment) {
+                    await telegramPaymentsHandler.sendTelegramInvoice(chatID, {
+                        subscriptionType,
+                        previousMessageID: callbackQuery.message.message_id,
+                    });
+                } else {
+                    await telegramPaymentsHandler.createAndSendCryptoInvoice(chatID, {
+                        subscriptionType,
+                        previousMessageID: callbackQuery.message.message_id,
+                    });
+                }
                 res.status(200)
                     .end('ok');
                 return;

@@ -9,6 +9,7 @@ const stakingInfo = require('./routes/staking-info');
 const availabilityHistory = require('./routes/history');
 
 const telegramBotWebhook = require('./routes/webhooks/telegram');
+const btcpayWebhook = require('./routes/webhooks/btcpay');
 
 app.use(cors({
     exposedHeaders: ['Content-Disposition'],
@@ -23,5 +24,6 @@ app.use('/subscription', subscription);
 app.use('/get-staking-info', stakingInfo);
 app.use('/history', availabilityHistory);
 app.use(`/telegram${process.env.TELEGRAM_BOT_TOKEN}`, telegramBotWebhook);
+app.use(`/btcpay${process.env.BTCPAY_STORE_ID}`, btcpayWebhook);
 
 module.exports = app;

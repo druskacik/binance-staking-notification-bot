@@ -1,4 +1,5 @@
 const ExcelJS = require('exceljs');
+const dayjs = require('dayjs');
 
 const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
     const workBook = new ExcelJS.Workbook();
@@ -11,7 +12,7 @@ const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
 
     // toISOString converts time to UTC
     const rows = dbData.map(row => ([
-        row.created_at.toISOString(),
+        dayjs.utc(row.created_at).format(),
         row.became_sold_out,
     ]));
 
@@ -29,10 +30,9 @@ const createExcelDefi = (assetName, dbData) => {
         { header: 'left_available', key: 'left_available', width: 16 },
         { header: 'sold_out', key: 'sold_out', width: 16 },
     ];
-
     // toISOString converts time to UTC
     const rows = dbData.map(row => ([
-        row.created_at.toISOString(),
+        dayjs.utc(row.created_at).format(),
         row.left_available,
         row.sold_out,
     ]));

@@ -6,13 +6,12 @@ const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
     const sheet = workBook.addWorksheet(`${assetName} ${duration} ${stakingType}`);
 
     sheet.columns = [
-        { header: 'timestamp (UTC)', key: 'timestamp', width: 24 },
+        { header: 'timestamp (UTC)', key: 'timestamp', width: 24, style: { numFmt: 'dd/mm/yyyy hh:mm:ss' } },
         { header: 'became_sold_out', key: 'became_sold_out', width: 16 },
     ];
 
-    // toISOString converts time to UTC
     const rows = dbData.map(row => ([
-        dayjs.utc(row.created_at).format(),
+        convertTimeToUTC(row.created_at),
         row.became_sold_out,
     ]));
 
@@ -26,13 +25,13 @@ const createExcelDefi = (assetName, dbData) => {
     const sheet = workBook.addWorksheet(`${assetName} DeFi`);
 
     sheet.columns = [
-        { header: 'timestamp (UTC)', key: 'timestamp', width: 32 },
+        { header: 'timestamp (UTC)', key: 'timestamp', width: 32, style: { numFmt: 'dd/mm/yyyy hh:mm:ss' } },
         { header: 'left_available', key: 'left_available', width: 16 },
         { header: 'sold_out', key: 'sold_out', width: 16 },
     ];
-    // toISOString converts time to UTC
+
     const rows = dbData.map(row => ([
-        dayjs.utc(row.created_at).format(),
+        convertTimeToUTC(row.created_at),
         row.left_available,
         row.sold_out,
     ]));
@@ -41,6 +40,18 @@ const createExcelDefi = (assetName, dbData) => {
 
     return workBook;
 };
+
+// hotfix
+// TODO: make this so that I don't feel ashamed for it
+const convertTimeToUTC = (ts) => {
+    let timeChangeTimestamp = 1635649200000 // Oct 31, 2021, 3:00:00 AM
+    timeChangeTimestamp = dayjs(timeChangeTimestamp);
+    const diff = timeChangeTimestamp.diff(ts);
+    if (diff > 0) {
+        return new Date(ts - 2 * 60 * 60 * 1000)
+    }
+    return new Date(ts - 1 * 60 * 60 * 1000)
+}
 
 module.exports = {
     createExcel,

@@ -9,9 +9,9 @@ const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
         { header: 'became_sold_out', key: 'became_sold_out', width: 16 },
     ];
 
-    // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
+    // toISOString converts time to UTC
     const rows = dbData.map(row => ([
-        new Date(row.created_at - 2 * 60 * 60 * 1000),
+        new Date(row.created_at.toISOString()),
         row.became_sold_out,
     ]));
 
@@ -30,9 +30,9 @@ const createExcelDefi = (assetName, dbData) => {
         { header: 'sold_out', key: 'sold_out', width: 16 },
     ];
 
-    // 2*60*1000 is a UTC correction ... server time is UTC + 2 hours
+    // toISOString converts time to UTC
     const rows = dbData.map(row => ([
-        new Date(row.created_at - 2 * 60 * 60 * 1000),
+        new Date(row.created_at.toISOString()),
         row.left_available,
         row.sold_out,
     ]));

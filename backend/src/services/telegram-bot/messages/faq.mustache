@@ -10,6 +10,6 @@ First step would be to make sure your subscription is active using the /settings
 
 Outside of 7 days of free trial, a subscription is needed for the bot to send notications. The bot used to be free but the amount of users grew so much that staking would often become sold out in minutes or even seconds. The next logical step was to give advantage to people who are willing to pay for it – also giving me, the developer, the motivation to continue with the project. You can read the full explanation behind this step at https://bswatcher.com/why-the-bot-is-not-for-free-anymore .
 
-<b>I'd like to pay for the subscription with crypto rather than fiat, is that possible?</b>
+<b>If I use BTC to pay for the subscription, how long will it take for the transaction to be processed?</b>
 
-Currently no, it's not possible. If you are sure you want to pay with crypto, hit me directly with the message at @rdruska and we can sort it out manually.
+Many people believe that a BTC transaction can take hours to get processed, however, this notion is not completely true. After a user sends transaction it will take only a few seconds until the transaction becomes a part of the blockchain – however, its status will be <i>unconfirmed</i> until miners validate it, which really can take minutes or hours. Since expectedly more than 99 % of the bitcoin transactions are <i>honest</i>, the approach taken here is following: consider every transaction settled even if it’s unconfirmed by the blockchain and consider it invalid only if it’s not confirmed even after a reasonable amount of time has passed. Thanks to this approach transactions can be processed in seconds.

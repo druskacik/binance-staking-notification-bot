@@ -124,45 +124,26 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             text = Mustache.render(templateText, {
                 ...data,
             });
-            if (chatID == process.env.ADMIN_TELEGRAM_CHAT_ID) {
-                replyMarkup = {
-                    inline_keyboard: [
-                        [{
-                            text: 'SUBSCRIPTION 1 WEEK (2€)',
-                            callback_data: '1WEEK',
-                        }],
-                        [{
-                            text: 'SUBSCRIPTION 4 WEEKS (5€)',
-                            callback_data: '4WEEK',
-                        }],
-                        [{
-                            text: 'SUBSCRIPTION 1 YEAR (30€)',
-                            callback_data: '1YEAR',
-                        }],
-                        [{
-                            text: 'SUBSCRIPTION 1 YEAR (15€ IN BTC)',
-                            callback_data: '1YEAR_BTC',
-                        }],
-                    ],
-                };
-            } else {
-                replyMarkup = {
-                    inline_keyboard: [
-                        [{
-                            text: 'SUBSCRIPTION 1 WEEK (2€)',
-                            callback_data: '1WEEK',
-                        }],
-                        [{
-                            text: 'SUBSCRIPTION 4 WEEKS (5€)',
-                            callback_data: '4WEEK',
-                        }],
-                        [{
-                            text: 'SUBSCRIPTION 1 YEAR (30€)',
-                            callback_data: '1YEAR',
-                        }],
-                    ],
-                };
-            }
+            replyMarkup = {
+                inline_keyboard: [
+                    [{
+                        text: 'SUBSCRIPTION 1 WEEK (2€)',
+                        callback_data: '1WEEK',
+                    }],
+                    [{
+                        text: 'SUBSCRIPTION 4 WEEKS (5€)',
+                        callback_data: '4WEEK',
+                    }],
+                    [{
+                        text: 'SUBSCRIPTION 1 YEAR (30€)',
+                        callback_data: '1YEAR',
+                    }],
+                    [{
+                        text: 'SUBSCRIPTION 1 YEAR (15€ IN BTC)',
+                        callback_data: '1YEAR_BTC',
+                    }],
+                ],
+            };
             break;
 
         case 'successful-payment':

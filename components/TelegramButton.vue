@@ -40,6 +40,7 @@
 
 .telegram-button__logo {
     width: 2rem;
+    height: 2rem;
 }
 
 @media screen and (max-width: 600px) {

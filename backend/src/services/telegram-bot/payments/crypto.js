@@ -21,12 +21,12 @@ const createAndSendCryptoInvoice = async (chatID, {
 
         switch (subscriptionType) {
             case '1YEAR_BTC':
-                amountFiat = 15;
+                amountFiat = 29;
                 subscriptionDuration = 365;
                 break;
 
             default:
-                amountFiat = 30;
+                amountFiat = 29;
                 subscriptionDuration = 365;
         }
 

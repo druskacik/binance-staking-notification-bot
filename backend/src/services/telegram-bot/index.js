@@ -139,7 +139,7 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
                         callback_data: '1YEAR',
                     }],
                     [{
-                        text: 'SUBSCRIPTION 1 YEAR (15€ IN BTC)',
+                        text: 'SUBSCRIPTION 1 YEAR (29€ IN BTC)',
                         callback_data: '1YEAR_BTC',
                     }],
                 ],

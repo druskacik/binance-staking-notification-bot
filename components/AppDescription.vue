@@ -81,13 +81,7 @@
                 </p>
                 <div class="description__addresses">
                     <div>
-                        BTC: 1DkQTzGvYvqzjHFYc5Zejx9ZUNE9NbxKBv
-                    </div>
-                    <div>
-                        ETH: 0xa58bccec9364c22d2a6e5e8e30b056ff9a0dfc7c
-                    </div>
-                    <div>
-                        LTC: LViYjGcuqEwRGFrWieL4NwMTXq1Fng5XBM
+                        BTC: bc1qfythpujuwva6gf4nfphj3k6vy2vdu2t8xwek7j
                     </div>
                     <div>
                         BNB (BEP20): 0xa58bccec9364c22d2a6e5e8e30b056ff9a0dfc7c

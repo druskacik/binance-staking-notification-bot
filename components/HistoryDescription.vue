@@ -13,7 +13,7 @@
                 <p>
                     For some currencies, staking for 90 days is getting sold out in minutes, sometimes even in seconds.
                     Here you can export historical data about staking options availability in xlsx format.
-                    Data for locked staking is available since April 27, for DeFi staking since May 5.
+                    Data for Locked Staking is available since April 27, for DeFi staking since May 5, for Locked Savings since August 27.
                 </p>
             </div>
         </div>

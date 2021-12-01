@@ -1,11 +1,16 @@
 <template>
     <div class="history-form">
         <h1>Export Historical Data</h1>
-        <div>
-            Data will be exported in xlsx format.
-            For locked staking, each row in the export represents a timestamp at which the staking project became sold out or available.
-            For defi staking, each row represents a timestamp with two values: how much currency is available for staking and whether or not the project is sold out.
-            These timestamps are logged once every minute.
+        <div class="history-form__description">
+            <p>
+                Data will be exported in xlsx format.
+                For Locked Staking and Locked Savings, each row in the export represents a timestamp at which the staking project became sold out or available.
+                For DeFi Staking, each row represents a timestamp with two values: how much currency is available for staking and whether or not the project is sold out.
+                These timestamps are logged once every minute.
+            </p>
+            <p>
+                Please note that if export of Locked Savings currency option is empty, it means that this savings option has been sold out constantly since at least August 27 when tracking of the availability of Locked Savings began.
+            </p>
         </div>
         <div class="history-form__type">
             <a-radio-group
@@ -178,6 +183,12 @@
                         >
                             {{ numDaysOption.label }}
                         </a-radio>
+                        <a-radio
+                            :value="null"
+                            class="history-form__radio-group__box"
+                        >
+                            all
+                        </a-radio>
                     </a-radio-group>
                 </div>
             </div>
@@ -316,6 +327,7 @@ export default {
         clearForm () {
             this.selectedAsset = undefined;
             this.selectedDuration = undefined;
+            this.selectedNumDays = 7;
             this.durationsLocked = [];
         },
     },
@@ -333,6 +345,10 @@ export default {
     padding: 2rem 2rem;
     background-color: white;
     border-radius: 1.8rem;
+}
+
+.history-form__description {
+    text-align: left;
 }
 
 .history-form__type {

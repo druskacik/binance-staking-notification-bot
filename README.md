@@ -6,6 +6,8 @@ Web: https://bswatcher.com
 
 Telegram bot: https://t.me/bstaking_bot
 
+Our Telegram community: https://t.me/bswatcher
+
 ## Setting up the project
 
 The project is built with `nuxt.js` and it requires [Node.js](https://nodejs.org/en/) installation (recommended version is `14.3.0` but everything `>=14` should suffice).
@@ -82,3 +84,10 @@ Run production server:
 ```bash
 npm start
 ```
+
+## Support development of the project
+
+BTC: bc1qswatcherxjhr384ywlqccc9r7vzfamyvqdzgc9
+BNB (BEP20): 0xa58bccec9364c22d2a6e5e8e30b056ff9a0dfc7c
+
+Notice that the bitcoin address starts with `bc1qswatcher`, similar to the website domain https://bswatcher.com. This is not a coincidence, it's a so called *vanity address* and was created with the [VanitySearch](https://github.com/JeanLucPons/VanitySearch).

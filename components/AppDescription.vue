@@ -81,7 +81,7 @@
                 </p>
                 <div class="description__addresses">
                     <div>
-                        BTC: bc1qfythpujuwva6gf4nfphj3k6vy2vdu2t8xwek7j
+                        BTC: bc1qswatcherxjhr384ywlqccc9r7vzfamyvqdzgc9
                     </div>
                     <div>
                         BNB (BEP20): 0xa58bccec9364c22d2a6e5e8e30b056ff9a0dfc7c

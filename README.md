@@ -88,6 +88,7 @@ npm start
 ## Support development of the project
 
 BTC: bc1qswatcherxjhr384ywlqccc9r7vzfamyvqdzgc9
+
 BNB (BEP20): 0xa58bccec9364c22d2a6e5e8e30b056ff9a0dfc7c
 
 Notice that the bitcoin address starts with `bc1qswatcher`, similar to the website domain https://bswatcher.com. This is not a coincidence, it's a so called *vanity address* and was created with the [VanitySearch](https://github.com/JeanLucPons/VanitySearch).

@@ -325,6 +325,10 @@ router.route('/')
                 await sendTelegramMessage('faq', chatID);
                 break;
 
+            case '/status':
+                await sendTelegramMessage('status', chatID);
+                break;
+
             default:
                 await sendTelegramMessage('unknown-command', chatID, {});
             }

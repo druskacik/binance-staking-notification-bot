@@ -195,6 +195,11 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             text = Mustache.render(templateText);
             break;
 
+        case 'status':
+            templateText = await readFileAsync(__dirname + '/messages/status.mustache');
+            text = Mustache.render(templateText);
+            break;
+
         case 'custom-message':
             text = data.message;
             break;

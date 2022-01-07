@@ -76,4 +76,6 @@ export default {
     publicRuntimeConfig: {
         baseUrl: process.env.BASE_URL || 'https://bswatcher.com',
     },
+    // avoid serving legacy js to modern browsers, see: https://philipwalton.com/articles/deploying-es2015-code-in-production-today/
+    modern: 'server',
 };

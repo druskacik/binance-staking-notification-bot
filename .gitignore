@@ -92,3 +92,6 @@ sw.*
 *.swp
 
 .editorconfig
+
+*.zip
+*.rar

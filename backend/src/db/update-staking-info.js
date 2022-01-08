@@ -85,22 +85,25 @@ const updateProjects = async (projects, assetID) => {
                 if (projectDB.sold_out && !project.sellOut) {
                     console.log(`Project became available ! Asset: ${project.asset} Duration: ${project.duration}`);
 
+                    const leftAvailable = parseFloat(project.upLimit) - parseFloat(project.purchased);
                     await knex('availability_history_locked').insert({
                         asset_name: project.asset,
                         duration: project.duration,
                         project_id: projectDB.id,
+                        left_available: leftAvailable,
                         became_sold_out: 0,
                     });
 
                     return project;
-                }
-
-                if (!projectDB.sold_out && project.sellOut) {
+                } else if (!projectDB.sold_out && project.sellOut) {
                     // project became sold out, log to database
+
+                    const leftAvailable = parseFloat(project.upLimit) - parseFloat(project.purchased);
                     await knex('availability_history_locked').insert({
                         asset_name: project.asset,
                         duration: project.duration,
                         project_id: projectDB.id,
+                        left_available: leftAvailable,
                         became_sold_out: 1,
                     });
                 }

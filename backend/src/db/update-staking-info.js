@@ -8,7 +8,7 @@ const sendNewAssetAvailableNotifications = require('../notifications/new-asset-a
 
 const updateStakingInfo = async (data) => {
     try {
-        const response = await Promise.all(data.map(async (item) => {
+        await Promise.all(data.map(async (item) => {
             const assetName = item.asset;
             let assetID = null;
 
@@ -62,6 +62,9 @@ const updateProjects = async (projects, assetID) => {
                     daily_interest_rate: project.config.dailyInterestRate,
                     min_purchase_amount: project.config.minPurchaseAmount,
                     max_purchase_amount: project.config.maxPurchaseAmountPerUser,
+                    up_limit: project.upLimit,
+                    issue_start_time: new Date(Number(project.issueStartTime)),
+                    issue_end_time: new Date(Number(project.issueEndTime)),
                 }).save();
                 return project;
             } else {
@@ -80,6 +83,9 @@ const updateProjects = async (projects, assetID) => {
                         daily_interest_rate: project.config.dailyInterestRate,
                         min_purchase_amount: project.config.minPurchaseAmount,
                         max_purchase_amount: project.config.maxPurchaseAmountPerUser,
+                        up_limit: project.upLimit,
+                        issue_start_time: new Date(Number(project.issueStartTime)),
+                        issue_end_time: new Date(Number(project.issueEndTime)),
                     });
 
                 if (projectDB.sold_out && !project.sellOut) {
@@ -94,7 +100,10 @@ const updateProjects = async (projects, assetID) => {
                         became_sold_out: 0,
                     });
 
-                    return project;
+                    return {
+                        ...project,
+                        leftAvailable,
+                    };
                 } else if (!projectDB.sold_out && project.sellOut) {
                     // project became sold out, log to database
 

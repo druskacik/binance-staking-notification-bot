@@ -16,7 +16,11 @@ app.use(cors({
 }));
 
 // starts all cronjobs
-require('./cronjobs');
+if (!(process.env.MAINTENANCE_MODE == 1)) {
+    require('./cronjobs');
+} else {
+    console.log('Maintenance mode on, cronjobs are not being run !');
+}
 
 app.use(bodyParser.json());
 

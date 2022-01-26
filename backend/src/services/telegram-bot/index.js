@@ -47,6 +47,13 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             });
             break;
 
+        case 'subscribe-howto':
+            templateText = await readFileAsync(__dirname + '/messages/subscribe-howto.mustache');
+            text = Mustache.render(templateText, {
+                ...data,
+            });
+            break;
+
         case 'unsubscribe':
             templateText = await readFileAsync(__dirname + '/messages/unsubscribe.mustache');
             text = Mustache.render(templateText, {

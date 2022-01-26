@@ -172,7 +172,7 @@ router.route('/')
                 break;
 
             case '/subscribe':
-                assets = messageText.trim().split(/\s+/).slice(1);
+                assets = messageText.split(' ').slice(1);
                 if (assets.length > 0) {
                     assets = assets.map(a => a.toUpperCase());
                     const newSubscribedAssets = await subscribeNewAssets(chatID, assets);
@@ -184,14 +184,14 @@ router.route('/')
                         hasPremium,
                     });
                 } else {
-                    await sendTelegramMessage('subscribe-howto', chatID, {
-                        locked: true,
+                    await sendTelegramMessage('custom-message', chatID, {
+                        message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe ada',
                     });
                 }
                 break;
 
             case '/subscribe_defi':
-                assets = messageText.trim().split(/\s+/).slice(1);
+                assets = messageText.split(' ').slice(1);
                 if (assets.length > 0) {
                     assets = assets.map(a => a.toUpperCase());
                     const newSubscribedAssets = await subscribeDefiAssets(chatID, assets);
@@ -203,14 +203,14 @@ router.route('/')
                         hasPremium,
                     });
                 } else {
-                    await sendTelegramMessage('subscribe-howto', chatID, {
-                        defi: true,
+                    await sendTelegramMessage('custom-message', chatID, {
+                        message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe_defi btc',
                     });
                 }
                 break;
 
             case '/subscribe_locked_savings':
-                assets = messageText.trim().split(/\s+/).slice(1);
+                assets = messageText.split(' ').slice(1);
                 if (assets.length > 0) {
                     assets = assets.map(a => a.toUpperCase());
                     const newSubscribedAssets = await subscribeLockedSavingsAssets(chatID, assets);
@@ -222,8 +222,8 @@ router.route('/')
                         hasPremium,
                     });
                 } else {
-                    await sendTelegramMessage('subscribe-howto', chatID, {
-                        lockedSavings: true,
+                    await sendTelegramMessage('custom-message', chatID, {
+                        message: 'Please enter at least one currency to subscribe ! E.g.:\n\n/subscribe_locked_savings btc',
                     });
                 }
                 break;

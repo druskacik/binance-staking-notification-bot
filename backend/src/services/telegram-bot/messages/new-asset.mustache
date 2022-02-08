@@ -1,12 +1,15 @@
-New currency staking option has just appeared on Binance !
+New locked staking option has just appeared on Binance!
 
-Currency: {{ name }}
+Currency: <b>{{ name }}</b>
+{{ #extraAsset }}
+Interest earned in: <b>{{ extraAsset }}</b>
+{{ /extraAsset }}
 
 Staking options:
 
 {{ #projects }}
-Duration: {{ duration }}
-Est. APY: {{ config.annualInterestRate }}
-Daily interest rate: {{ config.dailyInterestRate }}
+Duration: <b>{{ duration }}</b>
+Est. APY: <b>{{ annualInterestRate }}</b>
+Daily interest rate: <b>{{ dailyInterestRate }}</b>
 
 {{ /projects}}

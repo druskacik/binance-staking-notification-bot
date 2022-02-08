@@ -1,9 +1,13 @@
-Following staking options on {{ asset }}, which were previously sold out, are now available:
+Following locked staking options on <b>{{ asset }}</b>, which were previously sold out, are now available:
+
+{{ #extraAsset }}
+Interest earned in: <b>{{ extraAsset }}</b>
+{{ /extraAsset }}
 
 {{ #projects }}
-Duration: {{ duration }}
-Est. APY: {{ config.annualInterestRate }}
-Daily interest rate: {{ config.dailyInterestRate }}
-Left available: {{ leftAvailable }}
+Duration: <b>{{ duration }}</b>
+Est. APY: <b>{{ annualInterestRate }}</b>
+Daily interest rate: <b>{{ dailyInterestRate }}</b>
+Left available: <b>{{ leftAvailable }}</b>
 
 {{ /projects}}

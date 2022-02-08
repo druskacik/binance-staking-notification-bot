@@ -25,9 +25,28 @@ const updateStakingInfo = async (data) => {
 
                 assetID = newAssetRow.id;
 
+                const projects = item.projects.map((project) => {
+                    // if annualInterestRate and dailyInterestRate are 0 then interest is on the extra asset
+                    const annualInterestRate = parseFloat(project.config.annualInterestRate) || parseFloat(project.config.extraAnnualInterestRate);
+                    const dailyInterestRate = parseFloat(project.config.dailyInterestRate) || parseFloat(project.config.extraDailyInterestRate);
+
+                    return {
+                        duration: project.duration,
+                        extraAsset: project.config.extraInterestAsset,
+                        annualInterestRate,
+                        dailyInterestRate,
+                    }
+                });
+
+                let extraAsset;
+                if (projects.length > 0) {
+                    extraAsset = projects[0].extraAsset;
+                }
+
                 await sendNewAssetAvailableNotifications({
                     name: assetName,
-                    projects: item.projects,
+                    projects,
+                    extraAsset,
                 });
             } else {
                 assetRow = assetRow[0];
@@ -51,6 +70,10 @@ const updateProjects = async (projects, assetID) => {
 
             projectDB = projectDB.toJSON();
 
+            // if annualInterestRate and dailyInterestRate are 0 then interest is on the extra asset
+            const annualInterestRate = parseFloat(project.config.annualInterestRate) || parseFloat(project.config.extraAnnualInterestRate);
+            const dailyInterestRate = parseFloat(project.config.dailyInterestRate) || parseFloat(project.config.extraDailyInterestRate);
+
             if (projectDB.length === 0) {
                 await new Project({
                     binance_id: project.id,
@@ -58,13 +81,14 @@ const updateProjects = async (projects, assetID) => {
                     asset_id: assetID,
                     duration: project.duration,
                     sold_out: project.sellOut,
-                    interest_rate: project.config.annualInterestRate,
-                    daily_interest_rate: project.config.dailyInterestRate,
+                    interest_rate: annualInterestRate,
+                    daily_interest_rate: dailyInterestRate,
                     min_purchase_amount: project.config.minPurchaseAmount,
                     max_purchase_amount: project.config.maxPurchaseAmountPerUser,
                     up_limit: project.upLimit,
                     issue_start_time: new Date(Number(project.issueStartTime)),
                     issue_end_time: new Date(Number(project.issueEndTime)),
+                    extra_asset_name: project.config.extraInterestAsset,
                 }).save();
                 return project;
             } else {
@@ -79,13 +103,14 @@ const updateProjects = async (projects, assetID) => {
                         asset_name: project.asset,
                         duration: project.duration,
                         sold_out: project.sellOut,
-                        interest_rate: project.config.annualInterestRate,
-                        daily_interest_rate: project.config.dailyInterestRate,
+                        interest_rate: annualInterestRate,
+                        daily_interest_rate: dailyInterestRate,
                         min_purchase_amount: project.config.minPurchaseAmount,
                         max_purchase_amount: project.config.maxPurchaseAmountPerUser,
                         up_limit: project.upLimit,
                         issue_start_time: new Date(Number(project.issueStartTime)),
                         issue_end_time: new Date(Number(project.issueEndTime)),
+                        extra_asset_name: project.config.extraInterestAsset,
                     });
 
                 if (projectDB.sold_out && !project.sellOut) {
@@ -101,7 +126,10 @@ const updateProjects = async (projects, assetID) => {
                     });
 
                     return {
-                        ...project,
+                        duration: project.duration,
+                        extraAsset: project.config.extraInterestAsset,
+                        annualInterestRate,
+                        dailyInterestRate,
                         leftAvailable,
                     };
                 } else if (!projectDB.sold_out && project.sellOut) {
@@ -121,7 +149,7 @@ const updateProjects = async (projects, assetID) => {
         newProjectsResponse = newProjectsResponse.filter(p => Boolean(p));
 
         if (newProjectsResponse.length > 0) {
-            await sendStakingProjectAvailableNotification(newProjectsResponse, assetID);
+            await sendStakingProjectAvailableNotification(newProjectsResponse, assetID, newProjectsResponse[0].extraAsset);
         }
     } catch (err) {
         console.log(err);

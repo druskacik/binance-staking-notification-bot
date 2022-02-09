@@ -90,7 +90,14 @@ const updateProjects = async (projects, assetID) => {
                     issue_end_time: new Date(Number(project.issueEndTime)),
                     extra_asset_name: project.config.extraInterestAsset,
                 }).save();
-                return project;
+                // TODO: user gets notified as if this project was previously sold out, when in reality it's a completely new staking option !
+                return {
+                    duration: project.duration,
+                    extraAsset: project.config.extraInterestAsset,
+                    leftAvailable: project.upLimit,
+                    annualInterestRate,
+                    dailyInterestRate,
+                };
             } else {
                 projectDB = projectDB[0];
 

@@ -1,13 +1,16 @@
 New currency staking option has just appeared on Binance !
 
 Currency: {{ name }}
+{{ #extraAsset }}
+Interest earned in: {{ extraAsset }}
+{{ /extraAsset }}
 
 Staking options:
 
 {{ #projects }}
 Duration: {{ duration }}
-Est. APY: {{ config.annualInterestRate }}
-Daily interest rate: {{ config.dailyInterestRate }}
+Est. APY: {{ annualInterestRate }}
+Daily interest rate: {{ dailyInterestRate }}
 
 {{ /projects}}
 

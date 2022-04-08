@@ -1,5 +1,4 @@
 const ExcelJS = require('exceljs');
-const dayjs = require('dayjs');
 
 const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
     const workBook = new ExcelJS.Workbook();
@@ -11,7 +10,7 @@ const createExcel = (assetName, duration, dbData, stakingType = 'locked') => {
     ];
 
     const rows = dbData.map(row => ([
-        convertTimeToUTC(row.created_at),
+        new Date(row.created_at),
         row.became_sold_out,
     ]));
 
@@ -31,7 +30,7 @@ const createExcelDefi = (assetName, dbData) => {
     ];
 
     const rows = dbData.map(row => ([
-        convertTimeToUTC(row.created_at),
+        new Date(row.created_at),
         row.left_available,
         row.sold_out,
     ]));
@@ -40,18 +39,6 @@ const createExcelDefi = (assetName, dbData) => {
 
     return workBook;
 };
-
-// hotfix
-// TODO: make this so that I don't feel ashamed for it
-const convertTimeToUTC = (ts) => {
-    let timeChangeTimestamp = 1635649200000 // Oct 31, 2021, 3:00:00 AM
-    timeChangeTimestamp = dayjs(timeChangeTimestamp);
-    const diff = timeChangeTimestamp.diff(ts);
-    if (diff > 0) {
-        return new Date(ts - 2 * 60 * 60 * 1000)
-    }
-    return new Date(ts - 1 * 60 * 60 * 1000)
-}
 
 module.exports = {
     createExcel,

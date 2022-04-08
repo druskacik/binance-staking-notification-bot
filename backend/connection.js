@@ -13,7 +13,7 @@ const config = (environment) => {
                 database: process.env.DB_NAME,
                 port: process.env.DB_PORT,
                 charset: 'utf8',
-                timezone: 'Europe/Bratislava',
+                timezone: process.env.DB_TIMEZONE || 'utc',
             },
             pool: {
                 min: 0,
@@ -30,7 +30,7 @@ const config = (environment) => {
                 password: process.env.DB_PASS,
                 database: process.env.DB_NAME,
                 port: process.env.DB_PORT,
-                timezone: 'Europe/Bratislava',
+                timezone: process.env.DB_TIMEZONE || 'utc',
             },
             pool: {
                 min: 2,

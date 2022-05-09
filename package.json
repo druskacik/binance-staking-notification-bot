@@ -11,7 +11,8 @@
     "lint": "npm run lint:js",
     "lint:fix": "npm run lint:js -- --fix",
     "webpack": "nuxt webpack",
-    "backend": "nodemon backend.js"
+    "backend": "nodemon backend.js",
+    "backend:maintenance": "cross-env MAINTENANCE_MODE=1 nodemon backend.js"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
@@ -42,6 +43,7 @@
     "@babel/eslint-parser": "^7.14.7",
     "@nuxtjs/eslint-config": "^6.0.1",
     "@nuxtjs/eslint-module": "^3.0.2",
+    "cross-env": "^7.0.3",
     "eslint": "^7.29.0",
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",

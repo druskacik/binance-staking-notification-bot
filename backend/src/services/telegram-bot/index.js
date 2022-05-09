@@ -115,6 +115,14 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             });
             break;
 
+        case 'new-launchpad-project':
+            templateText = await readFileAsync(__dirname + '/messages/new-launchpad-project.mustache');
+            text = Mustache.render(templateText, {
+                ...data.item,
+                hasEndTime: Boolean(data.item.endTime),
+            });
+            break;
+
         case 'subscribe-activities':
             templateText = await readFileAsync(__dirname + '/messages/subscribe-activities.mustache');
             text = Mustache.render(templateText, {

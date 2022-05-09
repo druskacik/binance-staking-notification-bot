@@ -6,3 +6,4 @@ require('./locked-savings');
 require('./end-subscriptions');
 require('./delete-old-staking-history');
 require('./locked-staking-full-history');
+require('./launchpad');

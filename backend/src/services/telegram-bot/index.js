@@ -135,6 +135,18 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             text = Mustache.render(templateText);
             break;
 
+        case 'subscribe-launchpad':
+            templateText = await readFileAsync(__dirname + '/messages/subscribe-launchpad.mustache');
+            text = Mustache.render(templateText, {
+                hasPremium: data.hasPremium,
+            });
+            break;
+
+        case 'unsubscribe-launchpad':
+            templateText = await readFileAsync(__dirname + '/messages/unsubscribe-launchpad.mustache');
+            text = Mustache.render(templateText);
+            break;
+
         case 'get-premium':
             templateText = await readFileAsync(__dirname + '/messages/get-premium.mustache');
             text = Mustache.render(templateText, {

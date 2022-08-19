@@ -35,7 +35,7 @@ const updateDefiStakingInfo = async (data) => {
             }
 
             // TODO: item.projects contains non-flexible options !
-            await updateDefiProjects(item.products, assetID);
+            await updateDefiProjects([...item.products, ...item.projects], assetID);
         }));
     } catch (err) {
         console.log(err);
@@ -56,13 +56,14 @@ const updateDefiProjects = async (projects, assetID) => {
                 await new ProjectDefi({
                     binance_id: project.id,
                     asset_name: project.asset,
-                    product_name: project.productName,
+                    product_name: project.productName || project.projectId,
                     asset_id: assetID,
-                    duration_flexible: 1,
+                    duration_flexible: !Boolean(project.duration),
+                    duration: project.duration,
                     sold_out: project.sellOut,
-                    interest_rate: project.annualInterestRate,
-                    min_purchase_amount: project.minPurchaseAmount,
-                    max_purchase_amount: project.maxInvestAmount,
+                    interest_rate: project.annualInterestRate || project.config.annualInterestRate,
+                    min_purchase_amount: project.minPurchaseAmount || project.config.minPurchaseAmount,
+                    max_purchase_amount: project.maxInvestAmount || project.config.maxPurchaseAmountPerUser,
                     left_available: project.leftAvailable,
                 }).save();
                 return project;
@@ -84,7 +85,15 @@ const updateDefiProjects = async (projects, assetID) => {
 
                 if (projectDB.sold_out && !project.sellOut) {
                     console.log(`Project became available ! Asset: ${project.asset} `);
-                    return project;
+                    const projectInfo = {
+                        asset: project.asset,
+                        duration: project.duration || 'FLEXIBLE',
+                        annualInterestRate: project.annualInterestRate || project.config.annualInterestRate,
+                        minPurchaseAmount: project.minPurchaseAmount || project.config.minPurchaseAmount,
+                        maxInvestAmount: project.maxInvestAmount || project.config.maxPurchaseAmountPerUser,
+                        leftAvailable: project.leftAvailable || '?',
+                    }
+                    return projectInfo;
                 }
             }
         }));

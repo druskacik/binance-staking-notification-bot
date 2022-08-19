@@ -15,7 +15,7 @@ const logDefiHistory = async (data) => {
             if (assetRow.length > 0) {
                 assetRow = assetRow[0];
                 const assetID = assetRow.id;
-                await logDefiProjects(item.products, assetID, assetName);
+                await logDefiProjects([...item.products, ...item.projects], assetID, assetName);
             }
         }));
     } catch (err) {

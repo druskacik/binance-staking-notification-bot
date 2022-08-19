@@ -1,42 +1,41 @@
 {{ #followsNothing }}
-No notifications set up! Use the /help command to get instructions on how to use me.
+No notifications set up for <b>Locked Staking</b>, <b>DeFi Staking</b> or <b>Locked Savings</b>! Use the /help command to get instructions on how to use me.
 {{ /followsNothing }}
 {{ #followsLocked }}
-I will notify you when locked staking for one of the following currencies becomes available:
+I will notify you when <b>locked staking</b> for one of the following currencies becomes available:
 
 {{ #assetsLocked }}
-{{.}}
+<b>{{.}}</b>
 {{ /assetsLocked }}
 {{ #subcribeNewAssetsLocked }}
-new currency
+<b>new currency</b>
 {{ /subcribeNewAssetsLocked }}
 {{ /followsLocked }}
 
 {{ #followsDefi }}
-I will notify you when DeFi staking for one of the following currencies becomes available:
+I will notify you when <b>DeFi staking</b> for one of the following currencies becomes available:
 
 {{ #assetsDefi }}
-{{.}}
+<b>{{.}}</b>
 {{ /assetsDefi }}
 {{ #subcribeNewAssetsDefi }}
-new currency
+<b>new currency</b>
 {{ /subcribeNewAssetsDefi }}
 {{ /followsDefi }}
 
 {{ #followsLockedSavings }}
-I will notify you when Locked Savings option for one of the following currencies becomes available:
+I will notify you when <b>Locked Savings</b> option for one of the following currencies becomes available:
 
 {{ #assetsLockedSavings }}
-{{.}}
+<b>{{.}}</b>
 {{ /assetsLockedSavings }}
 {{ #subscribeNewAssetsLockedSavings }}
-new currency
+<b>new currency</b>
 {{ /subscribeNewAssetsLockedSavings }}
 {{ /followsLockedSavings }}
 
-{{ #subscribeActivities }}
-I will also notify you when new lending activity appears on Binance.
-{{ /subscribeActivities }}
+New activities notifications: <b>{{ activitiesStatus }}</b>
+New launchpad notifications: <b>{{ launchpadStatus }}</b>
 
 {{ #hasPremium }}
 Your subscription will end at <b>{{ subscriptionEndDate }}</b> (UTC time).

@@ -301,6 +301,32 @@ router.route('/')
 
                 break;
 
+            case '/subscribe_launchpad':
+                await knex('user')
+                    .where({
+                        telegram_chat_id: chatID,
+                    })
+                    .update({
+                        subscribe_launchpad: 1,
+                    });
+                await sendTelegramMessage('subscribe-launchpad', chatID, {
+                    hasPremium,
+                });
+                break;
+
+            case '/unsubscribe_launchpad':
+                await knex('user')
+                    .where({
+                        telegram_chat_id: chatID,
+                    })
+                    .update({
+                        subscribe_launchpad: 0,
+                    });
+                await sendTelegramMessage('unsubscribe-launchpad', chatID, {
+                    hasPremium,
+                });
+                break;
+
             case '/get_premium':
                 let user = await User.where({
                     telegram_chat_id: chatID,

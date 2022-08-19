@@ -115,6 +115,14 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
             });
             break;
 
+        case 'new-launchpad-project':
+            templateText = await readFileAsync(__dirname + '/messages/new-launchpad-project.mustache');
+            text = Mustache.render(templateText, {
+                ...data.item,
+                hasEndTime: Boolean(data.item.endTime),
+            });
+            break;
+
         case 'subscribe-activities':
             templateText = await readFileAsync(__dirname + '/messages/subscribe-activities.mustache');
             text = Mustache.render(templateText, {
@@ -124,6 +132,18 @@ const sendTelegramMessage = async (messageType, chatID, data) => {
 
         case 'unsubscribe-activities':
             templateText = await readFileAsync(__dirname + '/messages/unsubscribe-activities.mustache');
+            text = Mustache.render(templateText);
+            break;
+
+        case 'subscribe-launchpad':
+            templateText = await readFileAsync(__dirname + '/messages/subscribe-launchpad.mustache');
+            text = Mustache.render(templateText, {
+                hasPremium: data.hasPremium,
+            });
+            break;
+
+        case 'unsubscribe-launchpad':
+            templateText = await readFileAsync(__dirname + '/messages/unsubscribe-launchpad.mustache');
             text = Mustache.render(templateText);
             break;
 

@@ -66,7 +66,15 @@ const updateDefiProjects = async (projects, assetID) => {
                     max_purchase_amount: project.maxInvestAmount || project.config.maxPurchaseAmountPerUser,
                     left_available: project.leftAvailable,
                 }).save();
-                return project;
+                const projectInfo = {
+                    asset: project.asset,
+                    duration: project.duration || 'FLEXIBLE',
+                    annualInterestRate: project.annualInterestRate || project.config.annualInterestRate,
+                    minPurchaseAmount: project.minPurchaseAmount || project.config.minPurchaseAmount,
+                    maxInvestAmount: project.maxInvestAmount || project.config.maxPurchaseAmountPerUser,
+                    leftAvailable: project.leftAvailable || '?',
+                }
+                return projectInfo;
             } else {
                 projectDB = projectDB[0];
 

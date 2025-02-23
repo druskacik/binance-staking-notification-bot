@@ -19,8 +19,8 @@ export default {
         ],
         script: [
             {
-                src: 'https://umami.cr.bswatcher.com/umami.js',
-                'data-website-id': '084b5255-91ea-4b4a-bfb3-23666e88ae96',
+                src: 'https://umami.cr.bswatcher.com/script.js',
+                'data-website-id': 'b5fa6bd7-32cb-46ca-9230-d0bbf9fe53df',
                 async: true,
                 defer: true,
             },
